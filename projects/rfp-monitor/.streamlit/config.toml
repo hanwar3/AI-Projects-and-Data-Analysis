@@ -1,0 +1,18 @@
+[server]
+headless = true
+port = 8501
+runOnSave = false
+fileWatcherType = "none"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+base = "dark"
+primaryColor = "#E0913F"
+backgroundColor = "#12110F"
+secondaryBackgroundColor = "#1A1815"
+textColor = "#EDE8E0"

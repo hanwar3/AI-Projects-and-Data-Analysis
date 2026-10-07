@@ -1,0 +1,364 @@
+# =============================================================================
+#  Search profile - example (the author's own targeting, contact details removed)
+#  Edit this file to retarget the whole app. Nothing else needs to change.
+# =============================================================================
+
+name: Haider Waseem Anwar
+email: you@example.org
+phone: ""
+linkedin: https://www.linkedin.com/in/haideranwar/
+location: Washington, DC
+resume_path: ""   # path to your CV (PDF or DOCX); skills are parsed from it
+
+summary: >
+  PhD (2026) in Urban & Regional Sciences, Texas A&M. Disaster risk reduction,
+  emergency management, hazard mitigation and post-disaster recovery. Mixed
+  methods: qualitative coding (Atlas.ti), survey design, Stata/Python stats,
+  and geospatial analysis (ArcGIS, PyQGIS, GeoPandas). Prior roles at City of
+  Austin Watershed Protection, WWF-Pakistan, and UNDRR.
+
+# -----------------------------------------------------------------------------
+# TITLES - each cluster becomes a set of search queries.
+# Keep clusters tight; the cluster name shows up in the dashboard so you can
+# see which line of work is actually producing leads.
+# -----------------------------------------------------------------------------
+titles:
+  emergency_management:
+    - Emergency Management Specialist
+    - Emergency Management Analyst
+    - Emergency Preparedness Planner
+    - Disaster Recovery Specialist
+    - Emergency Planner
+    - Continuity of Operations Planner
+
+  resilience_planning:
+    - Resilience Planner
+    - Hazard Mitigation Planner
+    - Climate Adaptation Specialist
+    - Community Resilience Analyst
+    - Disaster Recovery Planner
+    - Urban Planner
+
+  research:
+    - Postdoctoral Research Associate
+    - Postdoctoral Fellow
+    - Research Scientist
+    - Research Associate
+    - Social Scientist
+    - Qualitative Researcher
+    - Senior Research Analyst
+
+  policy:
+    - Policy Analyst
+    - Program Analyst
+    - Research and Policy Analyst
+    - Program Officer
+    - Policy Advisor
+
+  risk_analytics:
+    - Disaster Risk Reduction Specialist
+    - Climate Risk Analyst
+    - Catastrophe Risk Analyst
+    - Risk Analyst
+
+  geospatial:
+    - GIS Analyst
+    - Geospatial Analyst
+    - Spatial Data Analyst
+
+# =============================================================================
+# WHERE - region controls the whole geography of the search
+# =============================================================================
+# `jobhunt regions`                    see every region
+# `jobhunt search --region uk`         search one without changing anything
+# `jobhunt rescore --region uk`        re-rank what you already have for it
+#
+# Changing `active_region` below makes a region the default. After changing it,
+# run `jobhunt rescore` so location scores are recalculated.
+#
+# Built in: us_dc, us, us_texas, canada, uk, europe, australia_nz, gulf,
+#           south_asia, africa, global_remote, humanitarian_global
+active_region: us_dc
+
+# `locations` below applies to the ACTIVE region only; other regions use their
+# own built-in lists. Leave it empty to use us_dc's defaults.
+locations:
+  - Washington, DC          
+  - Virginia
+  - Maryland
+  - Remote
+  - Texas
+remote_ok: true
+
+# Override any built-in region, or invent your own. Anything you leave out
+# falls back to the preset.
+regions:
+  # Example: widen the DC search up the north-east corridor.
+  # us_dc:
+  #   locations: [Washington DC, Virginia, Maryland, Philadelphia, New York, Remote]
+
+  # Example: a region that does not ship with the app.
+  # geneva:
+  #   label: "Switzerland - Geneva (UN hub)"
+  #   locations: [Geneva, Switzerland, Remote]
+  #   metro_terms: [geneva, genève, lausanne, bern, zurich]
+  #   country: ch
+  #   adzuna_country: ch
+  #   linkedin_location: "Geneva, Switzerland"
+  #   reliefweb_country: Switzerland
+  #   sources: [ats, reliefweb, adzuna, remotive, jobicy, linkedin, indeed]
+
+# -----------------------------------------------------------------------------
+# SKILLS - tiered. Expert skills score highest when a posting asks for them.
+# -----------------------------------------------------------------------------
+skills:
+  expert:
+    - qualitative research
+    - emergency management
+    - disaster risk reduction
+    - hazard mitigation
+    - disaster recovery
+    - Atlas.ti
+    - qualitative coding
+    - interviews
+    - survey design
+    - focus groups
+    - literature review
+    - PRISMA
+    - stakeholder engagement
+    - resilience
+    - climate adaptation
+    - flood risk
+    - community engagement
+    - grant writing
+    - policy analysis
+    - technical writing
+
+  proficient:
+    - Python
+    - Stata
+    - statistics
+    - regression
+    - data analysis
+    - data visualization
+    - ArcGIS
+    - GIS
+    - QGIS
+    - PyQGIS
+    - GeoPandas
+    - spatial analysis
+    - GDAL
+    - Rasterio
+    - PostGIS
+    - StoryMaps
+    - machine learning
+    - mixed methods
+    - program evaluation
+    - report writing
+
+  familiar:
+    - FEMA
+    - HUD
+    - CDBG-DR
+    - NIST
+    - NSF
+    - Sendai Framework
+    - incident command system
+    - ICS
+    - emergency operations center
+    - nature-based solutions
+    - search and rescue
+    - humanitarian
+    - international development
+    - SQL
+    - prompt engineering
+    - AI agents
+
+# -----------------------------------------------------------------------------
+# DOMAINS - subject-matter signal. A posting mentioning several of these is
+# very likely in your world even if the title is unusual.
+# -----------------------------------------------------------------------------
+domains:
+  - disaster
+  - hazard
+  - emergency
+  - resilience
+  - recovery
+  - mitigation
+  - climate
+  - flood
+  - wildfire
+  - hurricane
+  - earthquake
+  - preparedness
+  - risk reduction
+  - urban planning
+  - community development
+  - humanitarian
+  - vulnerability
+  - adaptation
+  - FEMA
+  - public safety
+  - housing
+  - equity
+  - watershed
+  - floodplain
+
+seniority:
+  - mid
+  - senior
+
+# Terms that mean "this was written for someone like you" - small extra credit.
+bonus_terms:
+  - PhD
+  - doctorate
+  - doctoral
+  - peer-reviewed
+  - publications
+  - mixed methods
+  - IRB
+  - human subjects
+  - grant
+  - federal
+  - interagency
+  - technical assistance
+
+# -----------------------------------------------------------------------------
+# FILTERS
+# -----------------------------------------------------------------------------
+exclude_titles:
+  - sales
+  - account executive
+  - business development representative
+  - insurance agent
+  - nurse
+  - truck driver
+  - warehouse
+  - server engineer
+  - software engineer
+  - front end
+  - backend
+  - devops
+  - registered nurse
+  - security guard
+  - intern            # remove this line if you want internships
+  - student worker
+
+exclude_companies: []
+
+# Hard eligibility constraints. Postings that trip these get flagged and, with
+# `--hide-blocked`, filtered out of the dashboard entirely.
+# Set to false any that do not apply to you.
+dealbreakers:
+  us_citizenship_required: false    # flag jobs demanding US citizenship
+  active_clearance_required: false  # flag jobs demanding an existing clearance
+  no_sponsorship: false             # flag jobs that state they will not sponsor
+
+min_salary: null   # e.g. 75000 to suppress anything advertised below that
+
+# -----------------------------------------------------------------------------
+# SOURCES
+# -----------------------------------------------------------------------------
+sources:
+  # Free, unlimited. Polls company ATS boards directly - highest signal.
+  ats_boards:
+    enabled: true
+
+  # Free federal jobs API. US only - skipped automatically in other regions.
+  # Key in ~2 min: https://developer.usajobs.gov/apirequest
+  usajobs:
+    enabled: true
+    keyword_limit: 8       # how many of your title queries to send
+    results_per_page: 50
+
+  # UN OCHA's humanitarian board. Worldwide, free, and the single best source
+  # for disaster risk / recovery / resilience work outside the US.
+  # Register a free appname: https://apidoc.reliefweb.int/parameters#appname
+  reliefweb:
+    enabled: true
+    limit_per_query: 40
+    use_region_country: true   # false = search worldwide regardless of region
+    queries:
+      - disaster risk reduction
+      - emergency management
+      - resilience
+      - recovery
+      - climate adaptation
+      - monitoring evaluation research
+
+  # 20 countries, free key: https://developer.adzuna.com/signup
+  # Skipped automatically in regions Adzuna does not serve (e.g. the Gulf).
+  adzuna:
+    enabled: true
+    max_queries: 8
+    limit_per_query: 50
+
+  # Free remote-jobs feed, no key.
+  remotive:
+    enabled: true
+    queries: [research analyst, policy analyst, climate, data analyst]
+
+  # Remote roles worldwide, no key. Skews heavily toward remote tech, so the
+  # queries are kept narrow - broad ones ("management", "marketing") pull in
+  # a few hundred engineering roles that score near zero anyway.
+  jobicy:
+    enabled: true
+    queries: [research, data]
+    geo: ""                # e.g. europe, usa, asia - blank means anywhere
+
+  # Germany and wider Europe, no key. Only worth running in European regions.
+  arbeitnow:
+    enabled: true
+    queries: [research, analyst, climate, sustainability, geospatial]
+
+  # Off by default: The Muse indexes big-brand corporate employers, so it is
+  # mostly noise for research and humanitarian work. Turn on if you retarget.
+  themuse:
+    enabled: false
+    pages: 2
+    queries: [analyst, research, policy]
+    categories: ["Data and Analytics", "Science and Engineering"]
+
+  # Apify - costs credits. The $5/mo free tier covers roughly 12k LinkedIn
+  # results, which is far more than you need.
+  linkedin:
+    enabled: true
+    actor: valig/linkedin-jobs-scraper
+    limit_per_query: 40
+    date_posted: r604800        # r86400 = 24h, r604800 = week, r2592000 = month
+    max_queries: 10
+
+  indeed:
+    enabled: false             # 10x the cost of LinkedIn; turn on when needed
+    actor: borderline/indeed-scraper
+    limit_per_query: 25
+    from_days: "7"
+    max_queries: 4
+
+# Monthly Apify spend ceiling. The app refuses to start a run that would
+# exceed this. Apify's free plan gives you $5/month.
+budget_usd_per_month: 4.0
+
+# -----------------------------------------------------------------------------
+# COMPANY WATCHLIST - polled free and unlimited, straight from each employer's
+# ATS. You see a posting the hour it goes up, with the real apply link rather
+# than a LinkedIn repost.
+#
+# HOW TO ADD ONE (30 seconds, and it always works):
+#   1. Open the employer's careers page
+#   2. Copy the URL
+#   3. jobhunt watch add-url "https://boards.greenhouse.io/theirslug"
+#
+# The entries below were each verified against the board's own declared name,
+# so they are real. The list is short on purpose: only Greenhouse, Lever,
+# Ashby, Workable and Recruitee publish open board APIs. Most large hazards
+# and federal-contractor employers - ICF, Guidehouse, Booz Allen, Tetra Tech
+# US, AECOM, Dewberry, RAND - run on Workday, iCIMS or Taleo, which do not.
+# Those employers are covered by the LinkedIn and USAJOBS sources instead, so
+# nothing is actually lost; it just arrives by a different route.
+# -----------------------------------------------------------------------------
+watchlist:
+  - {name: World Resources Institute, ats: greenhouse, slug: wri,            tags: climate research}
+  - {name: Mercy Corps,               ats: workable,   slug: mercycorps,     tags: humanitarian}
+  - {name: GiveDirectly,              ats: greenhouse, slug: givedirectly,   tags: development}
+  - {name: Code for America,          ats: greenhouse, slug: codeforamerica, tags: civic policy}

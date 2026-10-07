@@ -1,0 +1,31 @@
+{
+  "colors": {
+    "national_border_mint": "#2DD4BF",
+    "provincial_boundary_mint": "#5EEAD4",
+    "ocean_deep_navy": "#051329",
+    "ocean_coastal_blue": "#134E7A",
+    "card_background": "#080C16",
+    "card_border_glow": "#2DD4BF"
+  },
+  "typography": {
+    "font_family": "arialbd.ttf",
+    "title_font_size": 46,
+    "subtitle_font_size": 26,
+    "legend_header_font_size": 30,
+    "legend_body_font_size": 22,
+    "legend_notes_font_size": 21
+  },
+  "text_content": {
+    "title": "PAKISTAN MAJOR FLOOD EXTENTS (2010–PRESENT)",
+    "subtitle": "3D Path-Traced Topographic Inundation & Hydrodynamic Flow Model",
+    "data_sources": "Data Sources: UN OCHA • UNOSAT • NASA/NOAA VIIRS • Copernicus DEM (GLO-30)",
+    "legend_title": "FLOOD HAZARD INTENSITY & REFERENCE LEGEND",
+    "ramp_min_label": "Low Inundation / Seasonal",
+    "ramp_mid_label": "Moderate Basin Surge",
+    "ramp_max_label": "Extreme Megaflood Submersion",
+    "key_ocean": "Arabian Sea (Marine Ocean Bathymetry)",
+    "key_national_border": "Pakistan International Border (Mint #2DD4BF)",
+    "key_provincial_border": "Provincial Administrative Boundaries (Mint #5EEAD4)",
+    "scale_label": "250 km"
+  }
+}

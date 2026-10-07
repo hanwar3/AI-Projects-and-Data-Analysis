@@ -1,0 +1,11 @@
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+python-dateutil>=2.8
+streamlit>=1.45
+pandas>=2.1
+openpyxl>=3.1
+# Only the Green Climate Fund source needs this; it drives your installed Edge/Chrome.
+playwright>=1.45
+# Tests
+pytest>=8

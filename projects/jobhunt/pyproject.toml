@@ -1,0 +1,30 @@
+[project]
+name = "jobhunt"
+version = "1.0.0"
+description = "Free, local job search, scoring, and application tracking"
+requires-python = ">=3.10"
+dependencies = [
+  "requests>=2.31",
+  "PyYAML>=6.0",
+  "typer>=0.9",
+  "rich>=13.0",
+  "fastapi>=0.110",
+  "uvicorn>=0.27",
+  "pypdf>=4.0",
+]
+
+[project.optional-dependencies]
+docx = ["python-docx>=1.1"]
+
+[project.scripts]
+jobhunt = "jobhunt.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["jobhunt*"]
+
+[tool.setuptools.package-data]
+"jobhunt.web" = ["templates/*.html", "static/*"]

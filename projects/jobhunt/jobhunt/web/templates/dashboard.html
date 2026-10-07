@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jobhunt</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel-2: #1e222b; --line: #2a2f3a;
+    --ink: #e6e8ec; --muted: #8b93a7; --accent: #5b9dff; --good: #35c48c;
+    --warn: #e6b455; --bad: #e2705f; --radius: 10px;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f7f9; --panel: #fff; --panel-2: #f0f2f5; --line: #dfe3ea;
+      --ink: #12151a; --muted: #5d6678; --accent: #1f6feb;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    padding: 14px 20px; border-bottom: 1px solid var(--line);
+    display: flex; gap: 18px; align-items: center; flex-wrap: wrap;
+    background: var(--panel); position: sticky; top: 0; z-index: 20;
+  }
+  h1 { font-size: 16px; margin: 0; letter-spacing: .3px; }
+  h1 span { color: var(--muted); font-weight: 400; }
+  .stat { font-size: 12px; color: var(--muted); }
+  .stat b { color: var(--ink); font-size: 14px; }
+  .wrap { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 16px; padding: 16px; }
+  @media (max-width: 1000px) { .wrap { grid-template-columns: 1fr; } }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .panel > .head { padding: 10px 14px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  select, input, button {
+    background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 7px; padding: 6px 9px; font: inherit; font-size: 13px;
+  }
+  input[type=search] { min-width: 170px; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .list { max-height: calc(100vh - 175px); overflow-y: auto; }
+  .job {
+    padding: 11px 14px; border-bottom: 1px solid var(--line); cursor: pointer;
+    display: grid; grid-template-columns: 44px minmax(0,1fr) auto; gap: 11px; align-items: start;
+  }
+  .job:hover { background: var(--panel-2); }
+  .job.sel { background: var(--panel-2); box-shadow: inset 3px 0 0 var(--accent); }
+  .score { font-weight: 700; font-size: 15px; text-align: right; font-variant-numeric: tabular-nums; }
+  .s-hi { color: var(--good); } .s-mid { color: var(--warn); } .s-lo { color: var(--muted); }
+  .title { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 5px; }
+  .tag {
+    font-size: 10.5px; padding: 1px 6px; border-radius: 20px;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--muted);
+  }
+  .tag.flag { color: var(--bad); border-color: var(--bad); }
+  .tag.src { color: var(--accent); border-color: var(--accent); }
+  .detail { padding: 16px; max-height: calc(100vh - 130px); overflow-y: auto; }
+  .detail h2 { margin: 0 0 4px; font-size: 18px; }
+  .bar { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 12px; }
+  .bar .lbl { width: 74px; color: var(--muted); }
+  .bar .track { flex: 1; height: 7px; background: var(--panel-2); border-radius: 4px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--accent); }
+  .bar .val { width: 58px; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .warnbox { border: 1px solid var(--bad); border-radius: 8px; padding: 9px 12px; margin: 12px 0; background: rgba(226,112,95,.08); }
+  .warnbox b { color: var(--bad); }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; margin: 14px 0; }
+  pre.desc {
+    white-space: pre-wrap; word-break: break-word; background: var(--panel-2);
+    padding: 12px; border-radius: 8px; max-height: 380px; overflow-y: auto;
+    font-size: 12.5px; line-height: 1.55; border: 1px solid var(--line);
+  }
+  .empty { padding: 40px 20px; text-align: center; color: var(--muted); }
+  .chips { display: flex; gap: 5px; flex-wrap: wrap; margin: 8px 0; }
+  .chip { font-size: 11px; padding: 2px 7px; border-radius: 5px; background: var(--panel-2); border: 1px solid var(--line); }
+  a { color: var(--accent); }
+  .toast {
+    position: fixed; bottom: 18px; right: 18px; background: var(--panel);
+    border: 1px solid var(--accent); border-radius: 8px; padding: 10px 15px;
+    opacity: 0; transition: opacity .2s; pointer-events: none; z-index: 50;
+  }
+  .toast.on { opacity: 1; }
+  .alerts { padding: 10px 14px; font-size: 12.5px; color: var(--muted); border-bottom: 1px solid var(--line); }
+  .alerts b { color: var(--warn); }
+</style>
+</head>
+<body>
+<header>
+  <h1>jobhunt <span id="who"></span></h1>
+  <div class="stat">tracked <b id="s-total">-</b></div>
+  <div class="stat">applied <b id="s-applied">-</b></div>
+  <div class="stat">advanced <b id="s-adv">-</b></div>
+  <div class="stat">response <b id="s-rate">-</b></div>
+  <div class="stat">Apify spend <b id="s-spend">-</b></div>
+  <div style="flex:1"></div>
+  <button onclick="load()">Refresh</button>
+</header>
+
+<div class="wrap">
+  <div class="panel">
+    <div class="head">
+      <select id="f-status" onchange="load()">
+        <option value="new">New</option>
+        <option value="shortlist">Shortlisted</option>
+        <option value="prepped">Prepped</option>
+        <option value="applied">Applied</option>
+        <option value="active">Active pipeline</option>
+        <option value="interview">Interview</option>
+        <option value="rejected">Rejected</option>
+        <option value="all">All</option>
+      </select>
+      <select id="f-order" onchange="load()">
+        <option value="score">By score</option>
+        <option value="newest">Newest found</option>
+        <option value="posted">Recently posted</option>
+        <option value="company">By company</option>
+      </select>
+      <label class="stat">min <input id="f-min" type="number" value="45" min="0" max="100" step="5" style="width:62px" onchange="load()"></label>
+      <label class="stat"><input id="f-blocked" type="checkbox" onchange="load()"> hide blocked</label>
+      <input id="f-q" type="search" placeholder="search title/company/text" oninput="debounced()">
+      <span class="stat" id="count"></span>
+    </div>
+    <div class="alerts" id="alerts" style="display:none"></div>
+    <div class="list" id="list"><div class="empty">Loading...</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="detail" id="detail"><div class="empty">Select a job</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let JOBS = [], SEL = null, STATUSES = [];
+
+const $ = id => document.getElementById(id);
+const esc = s => (s ?? '').toString().replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+let t;
+function debounced() { clearTimeout(t); t = setTimeout(load, 280); }
+
+function toast(msg) {
+  const el = $('toast');
+  el.textContent = msg; el.classList.add('on');
+  setTimeout(() => el.classList.remove('on'), 1900);
+}
+
+function scoreClass(s) { return s >= 70 ? 's-hi' : s >= 50 ? 's-mid' : 's-lo'; }
+
+async function load() {
+  const p = new URLSearchParams({
+    status: $('f-status').value,
+    min_score: $('f-min').value || 0,
+    q: $('f-q').value,
+    hide_blocked: $('f-blocked').checked,
+    order: $('f-order').value,
+    limit: 300,
+  });
+  const [jobs, stats] = await Promise.all([
+    fetch('/api/jobs?' + p).then(r => r.json()),
+    fetch('/api/stats').then(r => r.json()),
+  ]);
+  JOBS = jobs; STATUSES = stats.statuses || [];
+  renderStats(stats);
+  renderList();
+}
+
+function renderStats(s) {
+  $('s-total').textContent = s.total;
+  $('s-applied').textContent = s.applied;
+  $('s-adv').textContent = s.advanced;
+  $('s-rate').textContent = s.applied ? s.response_rate + '%' : '-';
+  $('s-spend').textContent = '$' + (s.spend_month ?? 0).toFixed(2);
+
+  const bits = [];
+  if (s.due?.length) bits.push(`<b>${s.due.length}</b> follow-up${s.due.length > 1 ? 's' : ''} due`);
+  if (s.stale?.length) bits.push(`<b>${s.stale.length}</b> quiet 21+ days`);
+  const el = $('alerts');
+  if (bits.length) { el.innerHTML = bits.join(' &nbsp;·&nbsp; '); el.style.display = ''; }
+  else el.style.display = 'none';
+}
+
+function renderList() {
+  $('count').textContent = JOBS.length + ' shown';
+  if (!JOBS.length) {
+    $('list').innerHTML = '<div class="empty">Nothing matches these filters.<br>Try lowering the minimum score, or run <code>jobhunt search</code>.</div>';
+    return;
+  }
+  $('list').innerHTML = JOBS.map(j => {
+    const flags = [];
+    if (j.needs_citizenship) flags.push('<span class="tag flag">US citizen</span>');
+    if (j.needs_clearance) flags.push('<span class="tag flag">clearance</span>');
+    if (j.no_sponsorship) flags.push('<span class="tag flag">no sponsorship</span>');
+    return `<div class="job ${SEL === j.id ? 'sel' : ''}" onclick="pick(${j.id})">
+      <div class="score ${scoreClass(j.score)}">${Math.round(j.score)}</div>
+      <div>
+        <div class="title">${esc(j.title)}</div>
+        <div class="meta">${esc(j.company || '')} ${j.location ? '· ' + esc(j.location) : ''}</div>
+        <div class="tags">
+          <span class="tag src">${esc(j.source)}</span>
+          <span class="tag">${esc(j.status)}</span>
+          ${flags.join('')}
+        </div>
+      </div>
+      <div class="meta">${(j.posted_at || j.first_seen || '').slice(0, 10)}</div>
+    </div>`;
+  }).join('');
+}
+
+async function pick(id) {
+  SEL = id; renderList();
+  const j = await fetch('/api/job/' + id).then(r => r.json());
+  const b = j.score_breakdown || {};
+  const notes = b._notes || {};
+  const comps = ['title', 'skills', 'domain', 'seniority', 'location', 'bonus'];
+  const maxes = { title: 30, skills: 25, domain: 20, seniority: 10, location: 10, bonus: 5 };
+
+  const bars = comps.map(c => {
+    const v = b[c] ?? 0, m = maxes[c];
+    return `<div class="bar">
+      <div class="lbl">${c}</div>
+      <div class="track"><div class="fill" style="width:${Math.round(v / m * 100)}%"></div></div>
+      <div class="val">${v}/${m}</div>
+    </div>`;
+  }).join('');
+
+  const flagKeys = ['needs_citizenship', 'needs_clearance', 'no_sponsorship', 'status_only'];
+  const active = flagKeys.filter(k => j.flags && j.flags[k]);
+  const warn = active.length ? `<div class="warnbox">
+      <b>Eligibility: ${active.map(k => k.replace('needs_', '').replace(/_/g, ' ')).join(', ')}</b>
+      ${(j.flags.evidence || []).map(e => `<div class="meta">${esc(e)}</div>`).join('')}
+    </div>` : '';
+
+  const matched = (j.matched_terms || []).slice(0, 24)
+    .map(m => `<span class="chip">${esc(m)}</span>`).join('');
+
+  const opts = STATUSES.map(s =>
+    `<option value="${s}" ${s === j.status ? 'selected' : ''}>${s}</option>`).join('');
+
+  $('detail').innerHTML = `
+    <h2>${esc(j.title)}</h2>
+    <div class="meta">${esc(j.company || '')} ${j.location ? '· ' + esc(j.location) : ''}
+      · <span class="${scoreClass(j.score)}"><b>${j.score}</b>/100</span>
+      · ${esc(j.source)}${j.salary_raw ? ' · ' + esc(j.salary_raw) : ''}</div>
+    ${warn}
+    <div style="margin:14px 0">${bars}</div>
+    ${notes.seniority || notes.location ? `<div class="meta">seniority: ${esc(notes.seniority || '')} · location: ${esc(notes.location || '')}</div>` : ''}
+    ${notes.title ? `<div class="meta" style="color:var(--warn)">${esc(notes.title)}</div>` : ''}
+
+    <div class="actions">
+      <a href="${esc(j.apply_url || j.url || '#')}" target="_blank" rel="noopener"><button class="primary">Open posting</button></a>
+      <button onclick="prep(${j.id})">Generate packet</button>
+      <select onchange="setStatus(${j.id}, this.value)">${opts}</select>
+      <button onclick="addNote(${j.id})">Add note</button>
+    </div>
+
+    <div class="chips">${matched}</div>
+    ${j.notes ? `<div style="margin:12px 0"><b>Notes</b><div class="meta" style="white-space:pre-wrap">${esc(j.notes)}</div></div>` : ''}
+    ${j.packet_path ? `<div class="meta">Packet: <code>${esc(j.packet_path)}</code></div>` : ''}
+
+    ${j.events?.length ? `<div style="margin:14px 0"><b>History</b>${j.events.slice(0, 8).map(e =>
+      `<div class="meta">${e.ts.slice(0, 16)} · ${esc(e.kind)} ${esc(e.old_value || '')}${e.new_value ? ' → ' + esc(e.new_value) : ''} ${esc(e.detail || '')}</div>`).join('')}</div>` : ''}
+
+    <h3 style="margin:18px 0 6px;font-size:14px">Posting</h3>
+    <pre class="desc">${esc(j.description || '(no description captured)')}</pre>`;
+}
+
+async function setStatus(id, status) {
+  await fetch(`/api/job/${id}/status`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  });
+  toast('→ ' + status);
+  load();
+}
+
+async function addNote(id) {
+  const text = prompt('Note:');
+  if (!text) return;
+  await fetch(`/api/job/${id}/note`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  toast('Noted'); pick(id);
+}
+
+async function prep(id) {
+  toast('Generating...');
+  const r = await fetch(`/api/job/${id}/prep`, { method: 'POST' }).then(r => r.json());
+  if (r.folder) { toast('Packet ready'); load(); pick(id); }
+  else toast('Failed: ' + (r.detail || r.error || '?'));
+}
+
+load();
+setInterval(load, 120000);
+</script>
+</body>
+</html>
