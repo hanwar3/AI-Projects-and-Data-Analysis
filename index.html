@@ -211,17 +211,10 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     </div>
   </aside>
   <div class="body">
-    <div>
-      <p class="line-label">Workflow</p>
-      <ol class="line">
-        <li><b>Ingest</b><span>56,410 records</span></li>
-        <li><b>Clean &amp; classify</b><span>6 project classes</span></li>
-        <li><b>Describe</b><span>totals, medians</span></li>
-        <li><b>Test association</b><span>χ², Cramér's V</span></li>
-        <li><b>Compare groups</b><span>Welch ANOVA, Tukey</span></li>
-        <li><b>Model</b><span>OLS + diagnostics</span></li>
-      </ol>
-    </div>
+    <figure>
+        <a class="img" href="assets/img/diagram-hma.png"><img src="assets/img/diagram-hma.png" width="1600" height="469" alt="Flowchart: OpenFEMA data is filtered, classified and log-transformed, then tested with chi-square and Welch ANOVA and modelled with OLS; if variance is not constant, HC3 and clustered errors are used." loading="lazy"></a>
+        <figcaption>Analysis workflow (diagram built in FigJam)</figcaption>
+      </figure>
     <ul class="findings">
       <li><span class="stat">$7.83B</span><p>federal share obligated across 7,781 projects. Florida, Texas, Louisiana, California and Puerto Rico together received 53% of it.</p></li>
       <li><span class="stat">V = 0.36</span><p>The project mix depends strongly on the program (χ²(10) = 1,970, p &lt; 0.001). FMA is dominated by home elevations and buyouts, HMGP carries most generator and warning projects, and BRIC/PDM leans to safe rooms and other structural work.</p></li>
@@ -417,13 +410,10 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/rfp-monitor">Code and README</a></div>
   </aside>
   <div class="body">
-    <ol class="line">
-      <li><b>Fetch</b><span>17 portals; Playwright for 4 bot-protected</span></li>
-      <li><b>Match</b><span>keywords, accent-insensitive</span></li>
-      <li><b>Score</b><span>transparent points model</span></li>
-      <li><b>Store</b><span>SQLite, notice ID primary key</span></li>
-      <li><b>Review</b><span>dashboard, Excel export, run log</span></li>
-    </ol>
+    <figure>
+        <a class="img" href="assets/img/diagram-rfp.png"><img src="assets/img/diagram-rfp.png" width="1600" height="512" alt="Flowchart: three kinds of sources feed a keyword match; matches are scored, stored in SQLite and shown in a Streamlit dashboard with Excel export; every source writes its status to a run log." loading="lazy"></a>
+        <figcaption>Pipeline (diagram built in FigJam)</figcaption>
+      </figure>
     <p>Every check writes one log row per source (fetched, matched, new, status, error), and re-checks never duplicate or overwrite a notice. Grants.gov brings in US federal funding from FEMA, NSF, NOAA, HUD and DHS.</p>
   </div>
 </article>
@@ -441,13 +431,10 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/jobhunt">Code and README</a></div>
   </aside>
   <div class="body">
-    <ol class="line">
-      <li><b>Collect</b><span>12 sources, 12 regions</span></li>
-      <li><b>Deduplicate</b><span>across sources</span></li>
-      <li><b>Score 0–100</b><span>title, skills, domain, seniority, location</span></li>
-      <li><b>Track</b><span>saved, applied, follow-up</span></li>
-      <li><b>Prepare</b><span>packet with matched CV bullets</span></li>
-    </ol>
+    <figure>
+        <a class="img" href="assets/img/diagram-jobhunt.png"><img src="assets/img/diagram-jobhunt.png" width="1600" height="589" alt="Flowchart: job sources are deduplicated, paid sources only within budget, then scored against the profile and CV, stored in SQLite, and turned into application packets." loading="lazy"></a>
+        <figcaption>Pipeline (diagram built in FigJam)</figcaption>
+      </figure>
     <p>Scoring is a weighted model, not an LLM call, so rankings are stable and <span class="mono">jobhunt show</span> prints the arithmetic. A monthly cap stops paid scrapers before they exceed budget.</p>
   </div>
 </article>
@@ -464,13 +451,10 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/oblique-relief-maps-skill">Skill files</a></div>
   </aside>
   <div class="body">
-    <ol class="line">
-      <li><b>Ask the question</b><span>origin or impact?</span></li>
-      <li><b>Fetch terrain</b><span>DEM + bathymetry</span></li>
-      <li><b>Add hazard layer</b><span>points, raster, bivariate</span></li>
-      <li><b>Render</b><span>perspective, occlusion</span></li>
-      <li><b>Compose</b><span>title, legend, credits</span></li>
-    </ol>
+    <figure>
+        <a class="img" href="assets/img/diagram-skill.png"><img src="assets/img/diagram-skill.png" width="1600" height="365" alt="Flowchart: a map request first asks origin or impact, then terrain and the chosen layer are shaded, rendered in oblique 3D and composed into a 4K map." loading="lazy"></a>
+        <figcaption>Skill workflow (diagram built in FigJam)</figcaption>
+      </figure>
     <p>I wrote it after the Pakistan earthquake maps. With it installed, the Pakistan climate map and the Texas series (sheets 03 and 05) were each produced from a short request in the same style. It starts by asking whether a map should show where events originate or where they are felt, the check behind sheet 02.</p>
   </div>
 </article>
