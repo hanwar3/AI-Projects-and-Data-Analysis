@@ -1,0 +1,9 @@
+,observed,observed,observed,expected,expected,expected,adj_residual,adj_residual,adj_residual
+program,HMGP,BRIC/PDM,FMA,HMGP,BRIC/PDM,FMA,HMGP,BRIC/PDM,FMA
+project_class,,,,,,,,,
+Other structural,1313,143,44,1312.0,88.0,100.0,0.1,6.7,-6.5
+Acquisition / buyout,995,74,243,1148.0,77.0,88.0,-14.0,-0.4,18.9
+Generators & warning,2620,61,0,2345.0,157.0,179.0,19.8,-9.8,-17.1
+Safe room & wind retrofit,986,114,0,962.0,64.0,73.0,2.3,6.9,-9.6
+Flood control & drainage,652,45,11,619.0,41.0,47.0,3.9,0.6,-5.7
+Elevation,240,19,221,420.0,28.0,32.0,-25.6,-1.8,35.7

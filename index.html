@@ -4,433 +4,482 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Haider Anwar Projects</title>
-<meta name="description" content="Hazard maps, FEMA and USGS data analysis, and agentic AI tools by Haider Waseem Anwar, PhD candidate at Texas A&amp;M's Hazard Reduction &amp; Recovery Center.">
+<meta name="description" content="Quantitative analysis of FEMA data, hazard maps and agentic AI tools by Haider Waseem Anwar, PhD candidate at Texas A&amp;M's Hazard Reduction &amp; Recovery Center.">
 <meta property="og:title" content="Haider Anwar Projects">
-<meta property="og:description" content="Hazard maps, open-data analysis and agentic AI tools for disaster risk reduction.">
+<meta property="og:description" content="FEMA data analysis, hazard maps and agentic AI tools for disaster risk reduction.">
 <meta property="og:image" content="https://hanwar3.github.io/AI-Projects-and-Data-Analysis/assets/img/pakistan-shaking.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: an atlas. Each project is a plate: the figure runs wide, the caption sits
-   below in two columns (what it shows / how it was made). Tools read as plain text. */
+/* Layout: a set of numbered project sheets. An index table up top lists every sheet;
+   each sheet has a fixed title block on the left (what, data, method, tools) and the
+   evidence on the right. Colour comes from a topographic map: ink, contour brown, water blue. */
 :root {
-  --paper: #fafafc;        /* cool white, matches the map canvases */
-  --ink: #17161f;
-  --muted: #5c5a6d;
-  --rule: #e2e1ea;
-  --accent: #4536b3;       /* the violet of the map title blocks */
-  --accent-wash: #eeebfb;
-  --plate-shadow: 0 1px 2px rgba(23, 22, 31, .06), 0 18px 40px -18px rgba(40, 32, 110, .28);
-  --display: "Newsreader", "Iowan Old Style", Georgia, serif;
-  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --measure: 66ch;
-  --wide: 1180px;
+  --paper: #ffffff;
+  --panel: #f4f5f6;
+  --ink: #16181d;
+  --muted: #5b6270;
+  --rule: #d9dce1;
+  --contour: #9a5b2e;
+  --water: #2f6f9f;
+  --sans: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --wide: 1200px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #121118; --ink: #ecebf4; --muted: #a4a2b7; --rule: #2b2a38;
-    --accent: #ab9fff; --accent-wash: #211e38;
-    --plate-shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -18px rgba(0,0,0,.7);
-    color-scheme: dark;
+    --paper: #121417; --panel: #1b1e23; --ink: #e8eaed; --muted: #a3a9b4; --rule: #2e333a;
+    --contour: #d49a6a; --water: #7fb3dc; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #121118; --ink: #ecebf4; --muted: #a4a2b7; --rule: #2b2a38;
-  --accent: #ab9fff; --accent-wash: #211e38;
-  --plate-shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 40px -18px rgba(0,0,0,.7);
-  color-scheme: dark;
+  --paper: #121417; --panel: #1b1e23; --ink: #e8eaed; --muted: #a3a9b4; --rule: #2e333a;
+  --contour: #d49a6a; --water: #7fb3dc; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font: 400 1.0625rem/1.6 var(--sans);
-}
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.6 var(--sans); }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
-
+a { color: var(--ink); text-decoration-color: var(--contour); text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+a:hover { color: var(--contour); }
+a:focus-visible { outline: 2px solid var(--water); outline-offset: 2px; }
 .wrap { max-width: var(--wide); margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+.mono { font-family: var(--mono); }
+.num { font-variant-numeric: tabular-nums; }
 
 /* ---------- header ---------- */
-.masthead { padding-block: clamp(40px, 8vw, 88px) 28px; display: grid; gap: 22px; }
-.eyebrow {
-  font: 500 .78rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase;
-  color: var(--muted); margin: 0;
-}
-h1 {
-  font: 500 clamp(2.5rem, 6.4vw, 4.6rem)/1.02 var(--display);
-  letter-spacing: -.015em; margin: 0; text-wrap: balance;
-}
-h1 span { color: var(--accent); font-style: italic; font-weight: 400; }
-.lede { font-size: 1.2rem; line-height: 1.55; max-width: 58ch; margin: 0; color: var(--ink); }
-.links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 4px 0 0; padding: 0; list-style: none;
-  font: 500 .95rem/1.4 var(--sans); }
-.links .plain { color: var(--muted); font-family: var(--mono); font-size: .88rem; user-select: all; }
-.stack { font: 400 .86rem/1.7 var(--mono); color: var(--muted); max-width: 90ch; margin: 0; }
+header.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+  gap: 8px 24px; padding-block: 22px 18px; border-bottom: 2px solid var(--ink); }
+.who { font: 700 1.05rem/1.3 var(--sans); letter-spacing: -.005em; }
+.who span { font-weight: 400; color: var(--muted); }
+.contact { display: flex; flex-wrap: wrap; gap: 4px 20px; list-style: none; margin: 0; padding: 0; font-size: .92rem; }
+.contact .plain { font-family: var(--mono); font-size: .85rem; color: var(--muted); user-select: all; }
 
-nav.toc { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 8px; }
-nav.toc ol { list-style: none; margin: 0; padding: 12px 0; display: flex; flex-wrap: wrap; gap: 6px 28px;
-  font: 500 .9rem/1.4 var(--sans); }
-nav.toc a { color: var(--ink); text-decoration: none; }
-nav.toc a:hover { color: var(--accent); }
+.intro { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px 56px;
+  padding-block: clamp(36px, 6vw, 64px) 36px; align-items: end; }
+.intro h1 { font: 700 clamp(2rem, 4.6vw, 3.3rem)/1.06 var(--sans); letter-spacing: -.025em; margin: 0; text-wrap: balance; }
+.intro p { margin: 0 0 12px; color: var(--muted); max-width: 52ch; }
+.stack { font: 400 .8rem/1.8 var(--mono); color: var(--muted); }
 
-/* ---------- sections ---------- */
-section.part { padding-block: clamp(48px, 7vw, 84px) 0; }
-.part-head { display: grid; gap: 12px; max-width: var(--measure); margin-bottom: 36px; }
-h2 { font: 500 clamp(1.9rem, 3.6vw, 2.6rem)/1.1 var(--display); margin: 0; letter-spacing: -.01em; text-wrap: balance; }
-.part-head p { margin: 0; color: var(--muted); }
+/* ---------- index table ---------- */
+.index-wrap { overflow-x: auto; }
+table.index { width: 100%; border-collapse: collapse; font-size: .93rem; min-width: 640px; }
+table.index th { font: 500 .7rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--ink); }
+table.index td { padding: 11px 12px 11px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.index td:first-child { font-family: var(--mono); color: var(--contour); width: 3.2em; }
+table.index td.group { font: 500 .7rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink); background: var(--panel); padding: 7px 10px; }
+table.index a { font-weight: 600; text-decoration: none; }
+table.index a:hover { text-decoration: underline; }
+table.index .dim { color: var(--muted); }
 
-/* ---------- plates ---------- */
-.plate { display: grid; gap: 22px; padding-block: 8px 56px; }
-.plate + .plate { border-top: 1px solid var(--rule); padding-top: 48px; }
-.figs { display: grid; gap: 18px; }
-.figs.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.figs.lead { grid-template-columns: 1.55fr 1fr; align-items: start; }
-.figs.lead .side { display: grid; gap: 18px; }
-figure { margin: 0; display: grid; gap: 8px; min-width: 0; }
-figure a.img { display: block; border-radius: 6px; overflow: hidden; box-shadow: var(--plate-shadow);
-  background: #fff; transition: transform .25s ease, box-shadow .25s ease; }
-figure a.img:hover { transform: translateY(-2px); }
-figcaption { font: 400 .8rem/1.45 var(--mono); color: var(--muted); }
-.cap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px 48px; align-items: start; }
-.cap h3 { font: 500 1.6rem/1.15 var(--display); margin: 0 0 10px; text-wrap: balance; }
-.cap p { margin: 0 0 12px; max-width: var(--measure); }
-.cap .finding { font-family: var(--display); font-size: 1.22rem; line-height: 1.45; }
-.cap .finding strong { font-weight: 600; color: var(--accent); }
-dl.spec { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 7px 16px;
-  font: 400 .86rem/1.5 var(--sans); }
-dl.spec dt { font: 500 .72rem/1.9 var(--mono); letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+/* ---------- group headings ---------- */
+.group-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-top: 88px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink); }
+.group-head h2 { font: 700 1.5rem/1.2 var(--sans); margin: 0; letter-spacing: -.01em; }
+.group-head p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+/* ---------- sheets ---------- */
+.sheet { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 28px 48px;
+  padding-block: 40px; border-bottom: 1px solid var(--rule); }
+.block { align-self: start; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); }
+.block .no { font: 500 .78rem/1 var(--mono); color: var(--contour); }
+.block h3 { font: 700 1.35rem/1.2 var(--sans); margin: 8px 0 10px; letter-spacing: -.01em; text-wrap: balance; }
+.block .q { margin: 0 0 18px; color: var(--muted); font-size: .95rem; }
+dl.spec { margin: 0; border-top: 1px solid var(--ink); }
+dl.spec div { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; padding: 7px 0;
+  border-bottom: 1px solid var(--rule); font-size: .84rem; line-height: 1.45; }
+dl.spec dt { font: 500 .66rem/1.9 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 dl.spec dd { margin: 0; min-width: 0; }
-.num { font-variant-numeric: tabular-nums; }
-.more { font: 500 .92rem/1.5 var(--sans); display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 4px; }
+.links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 14px; font-size: .88rem; font-weight: 600; }
 
-/* ---------- tools ---------- */
-.tool { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 20px 56px;
-  padding-block: 36px; border-top: 1px solid var(--rule); }
-.tool:last-child { border-bottom: 1px solid var(--rule); }
-.tool h3 { font: 500 1.75rem/1.12 var(--display); margin: 0 0 8px; }
-.tool .kind { font: 500 .74rem/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
-.tool p { margin: 0 0 12px; max-width: var(--measure); }
-.flow { font: 400 .84rem/1.75 var(--mono); background: var(--accent-wash); color: var(--ink);
-  padding: 14px 16px; border-radius: 6px; margin: 0 0 16px; overflow-x: auto; white-space: pre; }
-.tool ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
-.tool li::marker { color: var(--accent); }
+.body { display: grid; gap: 22px; min-width: 0; align-content: start; }
+.findings { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.findings li { display: grid; grid-template-columns: 7.4rem minmax(0, 1fr); gap: 16px; align-items: baseline;
+  padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.findings .stat { font: 700 1.5rem/1.1 var(--sans); letter-spacing: -.02em; color: var(--water); font-variant-numeric: tabular-nums; }
+.findings p { margin: 0; }
+.body > p { margin: 0; max-width: 70ch; }
+figure { margin: 0; display: grid; gap: 8px; min-width: 0; align-content: start; }
+figure a.img { display: block; background: #fff; border: 1px solid var(--rule); }
+figcaption { font: 400 .76rem/1.5 var(--mono); color: var(--muted); }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.trio { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
+.trio .col { display: grid; gap: 18px; align-content: start; }
 
-/* ---------- method ---------- */
-.method { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px 40px; }
-.method h3 { font: 500 1.2rem/1.25 var(--display); margin: 0 0 6px; }
-.method p { margin: 0; color: var(--muted); font-size: .98rem; }
+/* data tables */
+.table-wrap { overflow-x: auto; }
+table.data { width: 100%; border-collapse: collapse; font-size: .85rem; font-variant-numeric: tabular-nums; min-width: 560px; }
+table.data caption { text-align: left; font: 600 .86rem/1.4 var(--sans); padding-bottom: 8px; }
+table.data th { font: 500 .68rem/1.35 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted);
+  text-align: right; padding: 6px 0 6px 14px; border-bottom: 1px solid var(--ink); vertical-align: bottom; }
+table.data td { text-align: right; padding: 6px 0 6px 14px; border-bottom: 1px solid var(--rule); }
+table.data th:first-child, table.data td:first-child { text-align: left; padding-left: 0; }
+table.data tfoot td { border-bottom: none; border-top: 1px solid var(--ink); font-weight: 600; }
+table.data .pos { color: var(--water); font-weight: 600; }
+table.data .neg { color: var(--contour); font-weight: 600; }
+.note { font-size: .78rem; color: var(--muted); margin: 6px 0 0; }
 
-footer { padding-block: 72px 56px; margin-top: 72px; border-top: 1px solid var(--rule);
-  display: grid; gap: 10px; color: var(--muted); font-size: .92rem; }
-footer .name { font: 500 1.4rem/1.2 var(--display); color: var(--ink); margin: 0; }
+/* workflow line: stations on a line, no boxes */
+ol.line { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+ol.line li { position: relative; padding: 24px 14px 0 0; font-size: .82rem; line-height: 1.4; }
+ol.line li::before { content: ""; position: absolute; top: 6px; left: 0; right: 0; height: 2px; background: var(--ink); }
+ol.line li:last-child::before { right: auto; width: 14px; }
+ol.line li::after { content: ""; position: absolute; top: 0; left: 0; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--ink); }
+ol.line b { display: block; font-weight: 600; margin-bottom: 2px; }
+ol.line span { color: var(--muted); font-family: var(--mono); font-size: .74rem; }
+.line-label { font: 500 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
 
-@media (max-width: 860px) {
-  .figs.lead, .cap, .tool { grid-template-columns: minmax(0, 1fr); }
+footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink); display: flex; flex-wrap: wrap;
+  justify-content: space-between; gap: 12px 24px; font-size: .9rem; color: var(--muted); }
+
+@media (max-width: 900px) {
+  .sheet, .intro { grid-template-columns: minmax(0, 1fr); }
+  .block { position: static; }
+  .trio { grid-template-columns: minmax(0, 1fr); }
+  ol.line { grid-auto-flow: row; grid-auto-columns: auto; }
+  ol.line li { padding: 0 0 14px 28px; }
+  ol.line li::before { top: 0; bottom: 0; left: 6px; right: auto; width: 2px; height: auto; }
+  ol.line li:last-child::before { height: 14px; width: 2px; }
 }
 @media (max-width: 560px) {
-  .figs.two { grid-template-columns: minmax(0, 1fr); }
-  body { font-size: 1rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  figure a.img { transition: none; }
-  figure a.img:hover { transform: none; }
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .findings li { grid-template-columns: minmax(0, 1fr); gap: 4px; }
 }
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <header class="masthead">
-    <p class="eyebrow">Projects · Hazards, data and AI</p>
-    <h1>Haider Waseem Anwar <span>maps risk from open data</span></h1>
-    <p class="lede">I am a PhD candidate in Urban and Regional Sciences at Texas A&amp;M's Hazard Reduction &amp; Recovery Center. These are analysis and software projects I built with agentic AI: hazard maps from USGS, FEMA and UN data, and tools that automate my own research workflow. Each one has its code and data sources in this repository.</p>
-    <ul class="links">
-      <li><a href="https://www.linkedin.com/in/haideranwar/" rel="noopener">LinkedIn</a></li>
-      <li><a href="https://hanwar3professionalwebsite.vercel.app" rel="noopener">Professional website</a></li>
-      <li><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis" rel="noopener">Code on GitHub</a></li>
-      <li class="plain">anwar_haider@tamu.edu</li>
-    </ul>
-    <p class="stack">Python · pandas · NumPy · SciPy · GeoPandas · rasterio · xarray · DuckDB · Stata · SQLite · Streamlit · FastAPI · Playwright · Claude Code · Git</p>
-  </header>
 
-  <nav class="toc" aria-label="Sections">
-    <ol>
-      <li><a href="#maps">Hazard maps</a></li>
-      <li><a href="#tools">Agentic AI tools</a></li>
-      <li><a href="#method">How I work with AI</a></li>
-    </ol>
-  </nav>
+<header class="top">
+  <div class="who">Haider Waseem Anwar <span>· PhD Candidate, Texas A&amp;M Hazard Reduction &amp; Recovery Center</span></div>
+  <ul class="contact">
+    <li><a href="https://www.linkedin.com/in/haideranwar/" rel="noopener">LinkedIn</a></li>
+    <li><a href="https://hanwar3professionalwebsite.vercel.app" rel="noopener">Website</a></li>
+    <li><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis" rel="noopener">GitHub</a></li>
+    <li class="plain">anwar_haider@tamu.edu</li>
+  </ul>
+</header>
 
-  <!-- ======================= MAPS ======================= -->
-  <section class="part" id="maps" aria-labelledby="maps-h">
-    <div class="part-head">
-      <p class="eyebrow">Spatial and quantitative analysis</p>
-      <h2 id="maps-h">Hazard maps</h2>
-      <p>Oblique 3D relief maps rendered at 4K in Python. Each answers one question, and its legend states what the colour measures and what it does not. Click any map for the full-resolution file.</p>
-    </div>
+<section class="intro">
+  <h1>Disaster data, analysed and mapped, with tools I built using agentic AI.</h1>
+  <div>
+    <p>Each sheet below states the question, the data, the method and the tools, then shows the result. All code is in the repository, and every number is computed from public FEMA, USGS and UN data.</p>
+    <p class="stack">Python · pandas · statsmodels · SciPy · NumPy · GeoPandas · rasterio · xarray · DuckDB · Stata · SQLite · Streamlit · FastAPI · Playwright · Claude Code</p>
+  </div>
+</section>
 
-    <!-- Pakistan earthquakes -->
-    <article class="plate" id="pakistan-earthquakes">
-      <div class="figs two">
-        <figure>
-          <a class="img" href="projects/hazard-maps/maps/pakistan-earthquakes.jpg">
-            <img src="assets/img/pakistan-earthquakes-sm.jpg" srcset="assets/img/pakistan-earthquakes-sm.jpg 960w, assets/img/pakistan-earthquakes.jpg 2000w" sizes="(max-width: 560px) 100vw, 50vw" width="960" height="540" alt="3D relief map of Pakistan with earthquake epicentres since 1900 clustered along the northern and western mountain belts; the Punjab and Sindh plains are almost empty." loading="eager">
-          </a>
-          <figcaption>Where ruptures began · M ≥ 2.5, 1900–2025</figcaption>
-        </figure>
-        <figure>
-          <a class="img" href="projects/hazard-maps/maps/pakistan-shaking.jpg">
-            <img src="assets/img/pakistan-shaking-sm.jpg" srcset="assets/img/pakistan-shaking-sm.jpg 960w, assets/img/pakistan-shaking.jpg 2000w" sizes="(max-width: 560px) 100vw, 50vw" width="960" height="540" alt="The same relief map coloured by the strongest ground shaking felt since 2000; violet covers almost the entire country, including the plains." loading="eager">
-          </a>
-          <figcaption>Where the ground actually shook · max MMI, 2000–2025</figcaption>
-        </figure>
-      </div>
-      <figure>
-        <a class="img" href="projects/hazard-maps/maps/pakistan-seismicity-stats.jpg">
-          <img src="assets/img/pakistan-seismicity-stats-sm.jpg" srcset="assets/img/pakistan-seismicity-stats-sm.jpg 960w, assets/img/pakistan-seismicity-stats.jpg 2000w" sizes="100vw" width="960" height="274" alt="Three charts: annual event counts on a log scale with a jump in 1973, a Gutenberg–Richter frequency–magnitude plot with fitted b-value, and a histogram of hypocentre depths." loading="lazy">
-        </a>
-        <figcaption>Catalogue completeness, Gutenberg–Richter b-value (Aki maximum likelihood), and depth distribution</figcaption>
-      </figure>
-      <div class="cap">
-        <div>
-          <p class="eyebrow">Pakistan · 1900–2025</p>
-          <h3>Earthquake origin versus earthquake impact</h3>
-          <p class="finding">The Punjab plain has <strong class="num">61</strong> catalogued epicentres against <strong class="num">840</strong> in the Sulaiman–Kirthar belt at the same latitudes. Yet <strong class="num">98.4%</strong> of Pakistan has felt at least MMI IV since 2000, and <strong class="num">28.9%</strong> has felt MMI VI or more.</p>
-          <p>An epicentre map is the usual way to show seismic risk, and it understates exposure exactly where most people live. Lahore's strongest shaking came from a rupture 340 km away. The companion map shows shaking received, built by compositing the maximum intensity from every USGS ShakeMap grid since 2000.</p>
-          <div class="more">
-            <a href="projects/hazard-maps/reports/Pakistan_Seismicity_Report.pdf">Technical report (PDF, 11 pages)</a>
-            <a href="projects/hazard-maps/maps/pakistan-causative-magnitude.jpg">Third map: magnitude of the causative event</a>
-            <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/hazard-maps/code">Code</a>
-          </div>
-        </div>
-        <dl class="spec">
-          <dt>Data</dt><dd>USGS ComCat catalogue (<span class="num">12,715</span> earthquakes, M ≥ 2.5); USGS ShakeMap grids for <span class="num">309</span> events; AWS Terrain Tiles elevation and bathymetry; UN OCHA boundaries</dd>
-          <dt>Methods</dt><dd>Gaussian kernel density, cell-wise maximum MMI composite, Gutenberg–Richter fit, catalogue completeness check</dd>
-          <dt>Tools</dt><dd>Python, NumPy, SciPy, DuckDB, Matplotlib, Pillow; custom oblique renderer</dd>
-        </dl>
-      </div>
-    </article>
-
-    <!-- Texas -->
-    <article class="plate" id="texas">
-      <div class="figs lead">
-        <figure>
-          <a class="img" href="projects/hazard-maps/maps/texas-flood-nfip.jpg">
-            <img src="assets/img/texas-flood-nfip-sm.jpg" srcset="assets/img/texas-flood-nfip-sm.jpg 960w, assets/img/texas-flood-nfip.jpg 2000w" sizes="(max-width: 860px) 100vw, 60vw" width="960" height="540" alt="3D relief map of Texas with paid NFIP flood claims shown in blue, heaviest around Houston and Harris County, with smaller clusters around Beaumont, the Rio Grande Valley, Central Texas and Dallas–Fort Worth." loading="lazy">
-          </a>
-          <figcaption>FEMA NFIP paid flood claims, weighted by payout · 2000–2025</figcaption>
-        </figure>
-        <div class="side">
-          <figure>
-            <a class="img" href="projects/hazard-maps/maps/texas-climate.jpg">
-              <img src="assets/img/texas-climate-sm.jpg" width="960" height="540" alt="Texas coloured by mean annual temperature and rainfall: dry yellow in the west, wet green in the east." loading="lazy">
-            </a>
-            <figcaption>Temperature × rainfall · 2000–2021</figcaption>
-          </figure>
-          <figure>
-            <a class="img" href="projects/hazard-maps/maps/texas-earthquakes.jpg">
-              <img src="assets/img/texas-earthquakes-sm.jpg" width="960" height="540" alt="Texas earthquake epicentres, concentrated in the Permian Basin of West Texas, with induced seismicity in Oklahoma at the top edge." loading="lazy">
-            </a>
-            <figcaption>Earthquake epicentres · M ≥ 2.5, 1900–2025</figcaption>
-          </figure>
-        </div>
-      </div>
-      <div class="cap">
-        <div>
-          <p class="eyebrow">Texas · FEMA OpenFEMA, USGS, TerraClimate</p>
-          <h3>Flood damage that was actually paid out</h3>
-          <p class="finding"><strong class="num">272,924</strong> National Flood Insurance Program claims in Texas since 2000, totalling <strong class="num">$16.0 billion</strong>.</p>
-          <p>The flood map shows realised damage, not modelled hazard. Claims follow people, property and insurance uptake, so the legend warns that uninsured rural floodplains can be blank and still flood. Harris County dwarfs every other cluster, so the density is log-stretched to keep secondary centres visible. The series reuses the Pakistan method, so the two places can be read side by side.</p>
-          <div class="more">
-            <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Texas_Hazard_Maps.py">Code</a>
-          </div>
-        </div>
-        <dl class="spec">
-          <dt>Data</dt><dd>OpenFEMA <code>FimaNfipClaims</code> API (paged, building + contents paid); USGS ComCat, M ≥ 2.5; TerraClimate 2000–2021 normals at ~4 km; US Census TIGER/Line</dd>
-          <dt>Methods</dt><dd>Payout-weighted point density, log stretch, bivariate colour classification</dd>
-          <dt>Tools</dt><dd>Python, requests, NumPy, SciPy, xarray; oblique-relief-maps skill</dd>
-        </dl>
-      </div>
-    </article>
-
-    <!-- Pakistan floods -->
-    <article class="plate" id="pakistan-floods">
-      <figure>
-        <a class="img" href="projects/hazard-maps/maps/pakistan-floods.jpg">
-          <img src="assets/img/pakistan-floods-sm.jpg" srcset="assets/img/pakistan-floods-sm.jpg 960w, assets/img/pakistan-floods.jpg 2000w" sizes="100vw" width="960" height="540" alt="Satellite-style 3D terrain of Pakistan with the 2010 and 2022 flood extents in white along the Indus, widening across Sindh, and major rivers in cyan." loading="lazy">
-        </a>
-        <figcaption>2010 and 2022 flood extents over 30 m terrain, with the Indus and its tributaries</figcaption>
-      </figure>
-      <div class="cap">
-        <div>
-          <p class="eyebrow">Pakistan · 2010 and 2022</p>
-          <h3>Two megafloods on one terrain model</h3>
-          <p>The 2010 flood moved as a wave down the Indus from Khyber Pakhtunkhwa to Sindh. The 2022 flood was driven by rain falling directly on Sindh and eastern Balochistan, where water pooled for months between the Kirthar range and the river embankments. Draping both footprints on the same relief shows how much of the damage sits on the flat lower Indus plain.</p>
-          <p>This connects to my earlier work at WWF-Pakistan on nature-based flood solutions for the Recharge Pakistan programme.</p>
-          <div class="more">
-            <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Pak_Flood_2010.py">Code</a>
-          </div>
-        </div>
-        <dl class="spec">
-          <dt>Data</dt><dd>UN OCHA 2010 union-council inundation; UNOSAT / NASA–NOAA VIIRS 2022 flood extent (375 m); Copernicus GLO-30 DEM; Natural Earth rivers and coastline; HDX boundaries</dd>
-          <dt>Methods</dt><dd>Vector rasterisation onto the DEM grid, elevation-weighted inundation layer, ocean masking</dd>
-          <dt>Tools</dt><dd>Python, rasterio, GeoPandas, SciPy, Pillow; QGIS project for inspection</dd>
-        </dl>
-      </div>
-    </article>
-
-    <!-- Pakistan climate -->
-    <article class="plate" id="pakistan-climate">
-      <figure>
-        <a class="img" href="projects/hazard-maps/maps/pakistan-climate.jpg">
-          <img src="assets/img/pakistan-climate-sm.jpg" srcset="assets/img/pakistan-climate-sm.jpg 960w, assets/img/pakistan-climate.jpg 2000w" sizes="100vw" width="960" height="540" alt="3D relief map of Pakistan coloured by temperature and rainfall: yellow for hot and dry in Sindh and Balochistan, green for hot and wet in Punjab, pale for the cold northern mountains." loading="lazy">
-        </a>
-        <figcaption>Mean annual temperature × rainfall, 2000–2021</figcaption>
-      </figure>
-      <div class="cap">
-        <div>
-          <p class="eyebrow">Pakistan · 2000–2021</p>
-          <h3>Where it is hot, wet, or both</h3>
-          <p>A bivariate map with four named corners: cool and dry (the Karakoram and Chagai), hot and dry (Thar, the lower Indus, Balochistan), cool and wet (the northern mountain fringe), and hot and wet (the Punjab and Khyber Pakhtunkhwa monsoon belt). Rainfall is read on a log scale so the arid south still shows variation.</p>
-          <div class="more">
-            <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Pak_Climate_Map.py">Code</a>
-          </div>
-        </div>
-        <dl class="spec">
-          <dt>Data</dt><dd>TerraClimate monthly grids (Abatzoglou et al. 2018), ~4 km, read from cloud storage with xarray</dd>
-          <dt>Methods</dt><dd>Climate normals, regridding to terrain, bivariate colour classification</dd>
-          <dt>Tools</dt><dd>Python, xarray, adlfs, NumPy; oblique-relief-maps skill</dd>
-        </dl>
-      </div>
-    </article>
-  </section>
-
-  <!-- ======================= TOOLS ======================= -->
-  <section class="part" id="tools" aria-labelledby="tools-h">
-    <div class="part-head">
-      <p class="eyebrow">Agentic AI</p>
-      <h2 id="tools-h">Tools and agent skills</h2>
-      <p>I build these by directing Claude Code agents: I define the problem, the sources and the tests, the agent writes and runs the code, and I review every result before it is kept. They run locally, need no paid AI calls to operate, and keep API keys out of the code.</p>
-    </div>
-
-    <article class="tool" id="rfp-monitor">
-      <div>
-        <p class="kind">Python · Streamlit · SQLite · Playwright</p>
-        <h3>RFP Monitor</h3>
-        <p>Watches 17 public procurement sources for open RFPs, expressions of interest and calls for proposals in disaster risk reduction, resilience, climate adaptation and urban planning, and ranks them in one dashboard.</p>
-        <div class="more">
-          <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/rfp-monitor">Code and README</a>
-        </div>
-      </div>
-      <div>
-        <pre class="flow">World Bank · UNGM (~40 UN agencies) · ADB · AfDB · EBRD · IsDB
-CDB · Green Climate Fund · EU Funding &amp; Tenders · Grants.gov
-IUCN · IFRC · ADPC · CDEMA · UNDP · WWF-Pakistan
-   → keyword match + transparent relevance score
-   → SQLite (notice ID as primary key, no duplicates)
-   → Streamlit dashboard + Excel export + per-source run log</pre>
-        <ul>
-          <li>Drives the local Edge or Chrome through Playwright for four sites that block scripts (Cloudflare, Drupal antibot, a 403 wall, a JavaScript-only list).</li>
-          <li>Grants.gov covers US federal funding from FEMA, NSF, NOAA, HUD and DHS.</li>
-          <li>Every check writes one log row per source: fetched, matched, new, status and error text.</li>
-          <li>17 automated tests.</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="tool" id="jobhunt">
-      <div>
-        <p class="kind">Python · FastAPI · SQLite · Apify</p>
-        <h3>jobhunt</h3>
-        <p>A local job search that pulls postings from federal, humanitarian, employer and aggregator sources, scores each one against a CV, and tracks applications. Built for a narrow field where precision matters more than volume.</p>
-        <div class="more">
-          <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/jobhunt">Code and README</a>
-        </div>
-      </div>
-      <div>
-        <pre class="flow">Greenhouse · Lever · Ashby · Workable boards · USAJOBS · ReliefWeb
-Adzuna · Remotive · Jobicy · Arbeitnow · LinkedIn and Indeed (Apify)
-   → deduplicate across sources
-   → 0–100 score (title, skills, domain, seniority, location) + eligibility flags
-   → SQLite pipeline: saved, applied, follow-up dates
-   → dashboard + CLI → application packet with matched CV bullets</pre>
-        <ul>
-          <li>Scoring is a weighted model, not an LLM call, so results are stable and <code>jobhunt show</code> prints the arithmetic.</li>
-          <li>Twelve built-in regions, from the DC metro to South Asia and the Gulf; one setting retargets the search.</li>
-          <li>Enforces a monthly spending cap on paid scrapers and logs the estimated cost of every run.</li>
-          <li>18 automated tests.</li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="tool" id="skill">
-      <div>
-        <p class="kind">Claude skill · NumPy</p>
-        <h3>oblique-relief-maps</h3>
-        <p>A reusable skill that teaches Claude to produce the relief maps above and the report that documents them. I wrote it after the Pakistan earthquake work so the method would not have to be rediscovered; the Pakistan climate map and the whole Texas series were then each made from a short request.</p>
-        <div class="more">
-          <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/oblique-relief-maps-skill">Skill files</a>
-        </div>
-      </div>
-      <div>
-        <pre class="flow">SKILL.md            when to use it; starts with "what does the colour show?"
-references/         cartography recipe · data sources · pitfalls
-scripts/terrain.py  DEM fetch and mosaic
-scripts/shading.py  hillshade, tints, density, bivariate colour
-scripts/oblique.py  perspective renderer, title, legend, credits</pre>
-        <ul>
-          <li>Encodes the origin-versus-impact check, so an agent asks which question a map answers before rendering it.</li>
-          <li>CPU-only renderer, written after the GPU path tracer failed on my laptop's integrated graphics.</li>
-        </ul>
-      </div>
-    </article>
-  </section>
-
-  <!-- ======================= METHOD ======================= -->
-  <section class="part" id="method" aria-labelledby="method-h">
-    <div class="part-head">
-      <p class="eyebrow">Practice</p>
-      <h2 id="method-h">How I work with AI</h2>
-    </div>
-    <div class="method">
-      <div>
-        <h3>Start from the question</h3>
-        <p>Before any code, I decide what the output must answer and for whom. That is how the epicentre map gained a shaking map beside it.</p>
-      </div>
-      <div>
-        <h3>Use primary, open sources</h3>
-        <p>USGS, FEMA, UN OCHA, TerraClimate and official procurement portals, pulled by API and cited on every figure.</p>
-      </div>
-      <div>
-        <h3>Check what the agent produces</h3>
-        <p>Counts are compared against the source, tests run on every change, and anything I cannot verify stays out of the final product.</p>
-      </div>
-      <div>
-        <h3>Leave it reusable</h3>
-        <p>READMEs, technical reports and agent skills, so the next analysis starts from what the last one learned.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p class="name">Haider Waseem Anwar</p>
-    <p>PhD Candidate, Urban and Regional Sciences, Texas A&amp;M University · Hazard Reduction &amp; Recovery Center</p>
-    <ul class="links">
-      <li><a href="https://www.linkedin.com/in/haideranwar/" rel="noopener">LinkedIn</a></li>
-      <li><a href="https://hanwar3professionalwebsite.vercel.app" rel="noopener">Professional website</a></li>
-      <li><a href="https://github.com/hanwar3" rel="noopener">GitHub</a></li>
-      <li class="plain">anwar_haider@tamu.edu</li>
-    </ul>
-  </footer>
+<div class="index-wrap">
+<table class="index">
+  <thead><tr><th>No.</th><th>Project</th><th>Data</th><th>Method</th></tr></thead>
+  <tbody>
+    <tr><td colspan="4" class="group">Quantitative analysis</td></tr>
+    <tr><td>01</td><td><a href="#hma">Federal hazard mitigation grants, FY2015–2024</a></td><td class="dim">OpenFEMA HMA Projects</td><td class="dim">χ², Welch ANOVA, OLS with HC3</td></tr>
+    <tr><td colspan="4" class="group">Spatial analysis</td></tr>
+    <tr><td>02</td><td><a href="#earthquakes">Pakistan earthquakes: origin vs impact</a></td><td class="dim">USGS ComCat, ShakeMap</td><td class="dim">Density, MMI composite, Gutenberg–Richter</td></tr>
+    <tr><td>03</td><td><a href="#texas">Texas flood claims, climate, earthquakes</a></td><td class="dim">OpenFEMA NFIP, TerraClimate</td><td class="dim">Payout-weighted density, bivariate</td></tr>
+    <tr><td>04</td><td><a href="#floods">Pakistan floods, 2010 and 2022</a></td><td class="dim">UN OCHA, UNOSAT, Copernicus</td><td class="dim">Raster overlay on 30 m terrain</td></tr>
+    <tr><td>05</td><td><a href="#climate">Pakistan temperature × rainfall</a></td><td class="dim">TerraClimate</td><td class="dim">Bivariate classification</td></tr>
+    <tr><td colspan="4" class="group">Agentic AI tools</td></tr>
+    <tr><td>06</td><td><a href="#rfp">RFP Monitor</a></td><td class="dim">17 procurement portals</td><td class="dim">Scraping, scoring, Streamlit</td></tr>
+    <tr><td>07</td><td><a href="#jobhunt">jobhunt</a></td><td class="dim">12 job sources</td><td class="dim">Weighted scoring, FastAPI</td></tr>
+    <tr><td>08</td><td><a href="#skill">oblique-relief-maps skill</a></td><td class="dim">DEMs, any hazard layer</td><td class="dim">Claude skill, NumPy renderer</td></tr>
+  </tbody>
+</table>
 </div>
 
+<!-- ============ QUANTITATIVE ============ -->
+<div class="group-head" id="quant"><h2>Quantitative analysis</h2><p>Statistics on FEMA program data</p></div>
+
+<article class="sheet" id="hma">
+  <aside class="block">
+    <div class="no">01</div>
+    <h3>Who gets federal hazard mitigation money, and for what?</h3>
+    <p class="q">Do FEMA's three mitigation grant streams fund different projects, and what drives the size of an award?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>OpenFEMA Hazard Mitigation Assistance Projects v4 (56,410 records, pulled 3 Oct 2026); sample of <span class="num">7,781</span> approved physical projects, FY2015–2024</dd></div>
+      <div><dt>Programs</dt><dd>HMGP (post-disaster), BRIC/PDM (pre-disaster competitive), FMA (flood insurance)</dd></div>
+      <div><dt>Methods</dt><dd>χ² test with Cramér's V and adjusted residuals; Levene, Welch ANOVA, Kruskal–Wallis, Tukey HSD; OLS on log award with region and year fixed effects, VIF, Breusch–Pagan, Jarque–Bera, HC3 and state-clustered errors</dd></div>
+      <div><dt>Tools</dt><dd>Python, pandas, SciPy, statsmodels, Matplotlib, Jupyter</dd></div>
+    </dl>
+    <div class="links">
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/fema-hma-analysis/hma_analysis.ipynb">Notebook with code</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/fema-hma-analysis/output">Result tables (CSV)</a>
+    </div>
+  </aside>
+  <div class="body">
+    <div>
+      <p class="line-label">Workflow</p>
+      <ol class="line">
+        <li><b>Ingest</b><span>56,410 records</span></li>
+        <li><b>Clean &amp; classify</b><span>6 project classes</span></li>
+        <li><b>Describe</b><span>totals, medians</span></li>
+        <li><b>Test association</b><span>χ², Cramér's V</span></li>
+        <li><b>Compare groups</b><span>Welch ANOVA, Tukey</span></li>
+        <li><b>Model</b><span>OLS + diagnostics</span></li>
+      </ol>
+    </div>
+    <ul class="findings">
+      <li><span class="stat">$7.83B</span><p>federal share obligated across 7,781 projects. Florida, Texas, Louisiana, California and Puerto Rico together received 53% of it.</p></li>
+      <li><span class="stat">V = 0.36</span><p>The project mix depends strongly on the program (χ²(10) = 1,970, p &lt; 0.001). FMA is dominated by home elevations and buyouts, HMGP carries most generator and warning projects, and BRIC/PDM leans to safe rooms and other structural work.</p></li>
+      <li><span class="stat">+96%</span><p>A BRIC/PDM award is about twice the size of an HMGP award for the same project type, region and year (95% CI +67% to +130%; holds with state-clustered errors, p = 0.001).</p></li>
+    </ul>
+    <div class="pair">
+      <figure>
+        <a class="img" href="projects/fema-hma-analysis/output/fig_crosstab.png"><img src="assets/img/hma-crosstab.png" width="1200" height="550" alt="Heat map of project counts by class and program with adjusted residuals; elevation and buyouts are strongly over-represented in FMA, generators in HMGP." loading="lazy"></a>
+        <figcaption>Project class × program. Blue cells hold more projects than independence predicts.</figcaption>
+      </figure>
+      <figure>
+        <a class="img" href="projects/fema-hma-analysis/output/fig_regression.png"><img src="assets/img/hma-regression.png" width="1200" height="473" alt="Forest plot of regression estimates: BRIC/PDM +96%, FMA +34%, elevation +15% (not significant), generators −75%, safe rooms −62%." loading="lazy"></a>
+        <figcaption>OLS estimates as % difference in award, HC3 95% CIs. Region effects in Table 2.</figcaption>
+      </figure>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Table 1. Federal obligations by project class, FY2015–2024</caption>
+        <thead><tr><th>Project class</th><th>Projects</th><th>Federal share ($M)</th><th>Share of total</th><th>Median award</th><th>Properties mitigated</th></tr></thead>
+        <tbody>
+          <tr><td>Other structural</td><td>1,500</td><td>2,345.7</td><td>30.0%</td><td>$379,791</td><td>11,534</td></tr>
+          <tr><td>Acquisition / buyout</td><td>1,312</td><td>1,575.8</td><td>20.1%</td><td>$406,129</td><td>8,451</td></tr>
+          <tr><td>Generators &amp; warning</td><td>2,681</td><td>1,179.0</td><td>15.1%</td><td>$119,508</td><td>52</td></tr>
+          <tr><td>Safe room &amp; wind retrofit</td><td>1,100</td><td>1,014.6</td><td>13.0%</td><td>$220,993</td><td>6,406</td></tr>
+          <tr><td>Flood control &amp; drainage</td><td>708</td><td>904.7</td><td>11.6%</td><td>$392,115</td><td>280</td></tr>
+          <tr><td>Elevation</td><td>480</td><td>810.0</td><td>10.3%</td><td>$642,287</td><td>4,238</td></tr>
+        </tbody>
+        <tfoot><tr><td>Total</td><td>7,781</td><td>7,829.8</td><td>100%</td><td></td><td>30,961</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Table 2. What predicts the size of a federal award (OLS, log federal share)</caption>
+        <thead><tr><th>Term (vs. reference)</th><th>Effect</th><th>95% CI (HC3)</th><th>p, HC3</th><th>p, state-clustered</th></tr></thead>
+        <tbody>
+          <tr><td>BRIC/PDM (vs. HMGP)</td><td class="pos">+96%</td><td>+67 to +130</td><td>&lt;0.001</td><td>0.001</td></tr>
+          <tr><td>FMA (vs. HMGP)</td><td class="pos">+34%</td><td>+15 to +56</td><td>&lt;0.001</td><td>0.084</td></tr>
+          <tr><td>Elevation (vs. buyout)</td><td>+15%</td><td>−2 to +35</td><td>0.090</td><td>0.230</td></tr>
+          <tr><td>Flood control &amp; drainage</td><td class="neg">−26%</td><td>−36 to −14</td><td>&lt;0.001</td><td>0.206</td></tr>
+          <tr><td>Other structural</td><td class="neg">−26%</td><td>−35 to −15</td><td>&lt;0.001</td><td>0.073</td></tr>
+          <tr><td>Safe room &amp; wind retrofit</td><td class="neg">−62%</td><td>−67 to −56</td><td>&lt;0.001</td><td>0.030</td></tr>
+          <tr><td>Generators &amp; warning</td><td class="neg">−75%</td><td>−78 to −72</td><td>&lt;0.001</td><td>&lt;0.001</td></tr>
+          <tr><td>Region 8, Mountain West (vs. Region 6, South Central)</td><td class="neg">−71%</td><td>−76 to −66</td><td>&lt;0.001</td><td>&lt;0.001</td></tr>
+          <tr><td>Region 9, Pacific (vs. Region 6)</td><td>−2%</td><td>−16 to +15</td><td>0.832</td><td>0.958</td></tr>
+        </tbody>
+      </table>
+      <p class="note">N = 7,781; R² = 0.18; fiscal-year and FEMA-region fixed effects. Regions 1, 3, 4, 5, 7, 8 and 10 receive 46–71% smaller awards than Region 6 (Region 2: −20%). Max VIF 2.45. Breusch–Pagan LM = 430 (p &lt; 0.001), so inference uses HC3 errors. Cost share is excluded because federal share is cost × cost share. Several project-type effects lose significance under state clustering, so treat them as descriptive.</p>
+    </div>
+    <div class="trio">
+      <figure>
+        <a class="img" href="projects/fema-hma-analysis/output/fig_states.png"><img src="assets/img/hma-states.png" width="1200" height="664" alt="Stacked bars of federal mitigation obligations for the top 12 states, led by Florida, Texas, Louisiana and California." loading="lazy"></a>
+        <figcaption>Top 12 states by federal obligation, split by project class</figcaption>
+      </figure>
+      <div class="col">
+        <figure>
+          <a class="img" href="projects/fema-hma-analysis/output/fig_award_size.png"><img src="assets/img/hma-award-size.png" width="1200" height="466" alt="Median award by class with interquartile ranges; elevation has the highest median at $642k and generators the lowest at $120k." loading="lazy"></a>
+          <figcaption>Median award and middle 50% · Welch F = 226, p &lt; 0.001</figcaption>
+        </figure>
+        <p class="note">Limits: these are grant records, not outcomes. They show where money went and for what, not whether it reduced later losses. That needs loss data such as NFIP claims or FEMA's National Risk Index joined at county level, which is the next step.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============ SPATIAL ============ -->
+<div class="group-head" id="spatial"><h2>Spatial analysis</h2><p>4K relief maps rendered in Python; click any map for full resolution</p></div>
+
+<article class="sheet" id="earthquakes">
+  <aside class="block">
+    <div class="no">02</div>
+    <h3>Pakistan earthquakes: where they start vs. where they are felt</h3>
+    <p class="q">Does an epicentre map show where people are exposed to shaking?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>USGS ComCat (<span class="num">12,715</span> earthquakes, M ≥ 2.5, 1902–2025); USGS ShakeMap grids for <span class="num">309</span> events; AWS Terrain Tiles; UN OCHA boundaries</dd></div>
+      <div><dt>Methods</dt><dd>Kernel density, cell-wise maximum MMI composite, Gutenberg–Richter b-value, completeness check</dd></div>
+      <div><dt>Tools</dt><dd>Python, NumPy, SciPy, DuckDB, Matplotlib, custom oblique renderer</dd></div>
+    </dl>
+    <div class="links">
+      <a href="projects/hazard-maps/reports/Pakistan_Seismicity_Report.pdf">Report (PDF, 11 pp.)</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/hazard-maps/code">Code</a>
+    </div>
+  </aside>
+  <div class="body">
+    <ul class="findings">
+      <li><span class="stat">61 vs 840</span><p>epicentres in the Punjab plain vs. the Sulaiman–Kirthar belt at the same latitudes.</p></li>
+      <li><span class="stat">98.4%</span><p>of Pakistan has still felt at least MMI IV since 2000, and 28.9% has felt MMI VI or more. Lahore's strongest shaking came from a rupture 340 km away.</p></li>
+    </ul>
+    <div class="pair">
+      <figure>
+        <a class="img" href="projects/hazard-maps/maps/pakistan-earthquakes.jpg"><img src="assets/img/pakistan-earthquakes-sm.jpg" width="960" height="540" alt="Relief map of Pakistan with earthquake epicentres clustered in the northern and western mountains; the plains are nearly empty." loading="lazy"></a>
+        <figcaption>Where ruptures began · M ≥ 2.5</figcaption>
+      </figure>
+      <figure>
+        <a class="img" href="projects/hazard-maps/maps/pakistan-shaking.jpg"><img src="assets/img/pakistan-shaking-sm.jpg" width="960" height="540" alt="The same map coloured by the strongest shaking felt since 2000; colour covers nearly the whole country." loading="lazy"></a>
+        <figcaption>Strongest shaking felt · max MMI, 2000–2025</figcaption>
+      </figure>
+    </div>
+    <figure>
+      <a class="img" href="projects/hazard-maps/maps/pakistan-seismicity-stats.jpg"><img src="assets/img/pakistan-seismicity-stats-sm.jpg" width="960" height="274" alt="Three charts: annual event counts with a jump in 1973, a Gutenberg–Richter plot with fitted b-value, and a depth histogram." loading="lazy"></a>
+      <figcaption>Catalogue completeness, Gutenberg–Richter fit (Aki maximum likelihood), depth distribution</figcaption>
+    </figure>
+  </div>
+</article>
+
+<article class="sheet" id="texas">
+  <aside class="block">
+    <div class="no">03</div>
+    <h3>Texas: flood damage paid, climate, earthquakes</h3>
+    <p class="q">Where has flood damage actually been paid out, and how does that sit against climate and seismicity?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>OpenFEMA NFIP redacted claims 2000–2025 (<span class="num">272,924</span> claims, <span class="num">$16.0B</span> paid); USGS ComCat; TerraClimate 2000–2021; Census TIGER/Line</dd></div>
+      <div><dt>Methods</dt><dd>Paged API pull, payout-weighted density with log stretch, bivariate colour classes</dd></div>
+      <div><dt>Tools</dt><dd>Python, requests, NumPy, SciPy, xarray, oblique-relief-maps skill</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Texas_Hazard_Maps.py">Code</a></div>
+  </aside>
+  <div class="body">
+    <p>The flood map shows realised, insured damage rather than modelled hazard, so uninsured rural floodplains can appear blank and still flood. Harris County dwarfs every other cluster, so density is log-stretched to keep Beaumont, the Rio Grande Valley, Central Texas and Dallas–Fort Worth visible.</p>
+    <div class="trio">
+      <figure>
+        <a class="img" href="projects/hazard-maps/maps/texas-flood-nfip.jpg"><img src="assets/img/texas-flood-nfip-sm.jpg" width="960" height="540" alt="Relief map of Texas with paid NFIP flood claims concentrated around Houston." loading="lazy"></a>
+        <figcaption>NFIP paid flood claims, weighted by payout</figcaption>
+      </figure>
+      <div class="col">
+        <figure>
+          <a class="img" href="projects/hazard-maps/maps/texas-climate.jpg"><img src="assets/img/texas-climate-sm.jpg" width="960" height="540" alt="Texas coloured by temperature and rainfall: dry west, wet east." loading="lazy"></a>
+          <figcaption>Temperature × rainfall, 2000–2021</figcaption>
+        </figure>
+        <figure>
+          <a class="img" href="projects/hazard-maps/maps/texas-earthquakes.jpg"><img src="assets/img/texas-earthquakes-sm.jpg" width="960" height="540" alt="Texas earthquake epicentres concentrated in the Permian Basin, with Oklahoma's induced seismicity at the top edge." loading="lazy"></a>
+          <figcaption>Earthquake epicentres, M ≥ 2.5</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</article>
+
+<article class="sheet" id="floods">
+  <aside class="block">
+    <div class="no">04</div>
+    <h3>Pakistan floods, 2010 and 2022</h3>
+    <p class="q">How do the two largest floods on record sit on the Indus terrain?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>UN OCHA 2010 inundation; UNOSAT / VIIRS 2022 extent (375 m); Copernicus GLO-30 DEM; Natural Earth rivers; HDX boundaries</dd></div>
+      <div><dt>Methods</dt><dd>Vector rasterisation onto the DEM grid, elevation-weighted inundation layer, ocean masking</dd></div>
+      <div><dt>Tools</dt><dd>Python, rasterio, GeoPandas, SciPy, Pillow, QGIS</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Pak_Flood_2010.py">Code</a></div>
+  </aside>
+  <div class="body">
+    <p>The 2010 flood travelled as a wave down the Indus from Khyber Pakhtunkhwa to Sindh. In 2022 rain fell directly on Sindh and eastern Balochistan and pooled for months between the Kirthar range and the river embankments. Both footprints concentrate on the flat lower Indus plain, the area I worked on for nature-based flood solutions at WWF-Pakistan.</p>
+    <figure>
+      <a class="img" href="projects/hazard-maps/maps/pakistan-floods.jpg"><img src="assets/img/pakistan-floods-sm.jpg" srcset="assets/img/pakistan-floods-sm.jpg 960w, assets/img/pakistan-floods.jpg 2000w" sizes="(max-width: 900px) 100vw, 800px" width="960" height="540" alt="3D terrain of Pakistan with 2010 and 2022 flood extents along the Indus and major rivers." loading="lazy"></a>
+      <figcaption>2010 and 2022 flood extents over 30 m terrain</figcaption>
+    </figure>
+  </div>
+</article>
+
+<article class="sheet" id="climate">
+  <aside class="block">
+    <div class="no">05</div>
+    <h3>Pakistan temperature × rainfall</h3>
+    <p class="q">Where is it hot, wet, or both?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>TerraClimate monthly grids, ~4 km, 2000–2021</dd></div>
+      <div><dt>Methods</dt><dd>Climate normals, regridding to terrain, bivariate classes, log-scaled rainfall</dd></div>
+      <div><dt>Tools</dt><dd>Python, xarray, adlfs, NumPy, oblique-relief-maps skill</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Pak_Climate_Map.py">Code</a></div>
+  </aside>
+  <div class="body">
+    <p>Four named corners: cool and dry (Karakoram, Chagai), hot and dry (Thar, lower Indus, Balochistan), cool and wet (northern mountain fringe), hot and wet (the Punjab and Khyber Pakhtunkhwa monsoon belt).</p>
+    <figure>
+      <a class="img" href="projects/hazard-maps/maps/pakistan-climate.jpg"><img src="assets/img/pakistan-climate-sm.jpg" srcset="assets/img/pakistan-climate-sm.jpg 960w, assets/img/pakistan-climate.jpg 2000w" sizes="(max-width: 900px) 100vw, 800px" width="960" height="540" alt="Relief map of Pakistan coloured by temperature and rainfall classes." loading="lazy"></a>
+      <figcaption>Mean annual temperature × rainfall, 2000–2021</figcaption>
+    </figure>
+  </div>
+</article>
+
+<!-- ============ AGENTIC ============ -->
+<div class="group-head" id="agentic"><h2>Agentic AI tools</h2><p>Built by directing Claude Code: I set the problem, sources and tests; the agent writes and runs the code; I review the results</p></div>
+
+<article class="sheet" id="rfp">
+  <aside class="block">
+    <div class="no">06</div>
+    <h3>RFP Monitor</h3>
+    <p class="q">Finds open RFPs, EOIs and calls for proposals in disaster risk reduction, resilience and climate adaptation.</p>
+    <dl class="spec">
+      <div><dt>Sources</dt><dd>World Bank, UNGM (~40 UN agencies), ADB, AfDB, EBRD, IsDB, CDB, GCF, EU F&amp;T, Grants.gov, IUCN, IFRC, ADPC, CDEMA, UNDP, WWF-Pakistan</dd></div>
+      <div><dt>Tools</dt><dd>Python, requests, BeautifulSoup, Playwright, SQLite, Streamlit, pytest</dd></div>
+      <div><dt>Tests</dt><dd>17 passing</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/rfp-monitor">Code and README</a></div>
+  </aside>
+  <div class="body">
+    <ol class="line">
+      <li><b>Fetch</b><span>17 portals; Playwright for 4 bot-protected</span></li>
+      <li><b>Match</b><span>keywords, accent-insensitive</span></li>
+      <li><b>Score</b><span>transparent points model</span></li>
+      <li><b>Store</b><span>SQLite, notice ID primary key</span></li>
+      <li><b>Review</b><span>dashboard, Excel export, run log</span></li>
+    </ol>
+    <p>Every check writes one log row per source (fetched, matched, new, status, error), and re-checks never duplicate or overwrite a notice. Grants.gov brings in US federal funding from FEMA, NSF, NOAA, HUD and DHS.</p>
+  </div>
+</article>
+
+<article class="sheet" id="jobhunt">
+  <aside class="block">
+    <div class="no">07</div>
+    <h3>jobhunt</h3>
+    <p class="q">A local job search that ranks postings against a CV and tracks applications.</p>
+    <dl class="spec">
+      <div><dt>Sources</dt><dd>Greenhouse, Lever, Ashby, Workable, USAJOBS, ReliefWeb, Adzuna, Remotive, Jobicy, Arbeitnow, LinkedIn and Indeed via Apify</dd></div>
+      <div><dt>Tools</dt><dd>Python, FastAPI, SQLite, Apify, pytest</dd></div>
+      <div><dt>Tests</dt><dd>18; 17 pass, 1 needs a CV file</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/jobhunt">Code and README</a></div>
+  </aside>
+  <div class="body">
+    <ol class="line">
+      <li><b>Collect</b><span>12 sources, 12 regions</span></li>
+      <li><b>Deduplicate</b><span>across sources</span></li>
+      <li><b>Score 0–100</b><span>title, skills, domain, seniority, location</span></li>
+      <li><b>Track</b><span>saved, applied, follow-up</span></li>
+      <li><b>Prepare</b><span>packet with matched CV bullets</span></li>
+    </ol>
+    <p>Scoring is a weighted model, not an LLM call, so rankings are stable and <span class="mono">jobhunt show</span> prints the arithmetic. A monthly cap stops paid scrapers before they exceed budget.</p>
+  </div>
+</article>
+
+<article class="sheet" id="skill">
+  <aside class="block">
+    <div class="no">08</div>
+    <h3>oblique-relief-maps: a Claude skill</h3>
+    <p class="q">Packages the mapping method so an AI agent can reproduce it from a short request.</p>
+    <dl class="spec">
+      <div><dt>Contents</dt><dd>SKILL.md, references (cartography, data sources, pitfalls), scripts (terrain, shading, renderer)</dd></div>
+      <div><dt>Tools</dt><dd>Python, NumPy, SciPy, Pillow; CPU only</dd></div>
+    </dl>
+    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/oblique-relief-maps-skill">Skill files</a></div>
+  </aside>
+  <div class="body">
+    <ol class="line">
+      <li><b>Ask the question</b><span>origin or impact?</span></li>
+      <li><b>Fetch terrain</b><span>DEM + bathymetry</span></li>
+      <li><b>Add hazard layer</b><span>points, raster, bivariate</span></li>
+      <li><b>Render</b><span>perspective, occlusion</span></li>
+      <li><b>Compose</b><span>title, legend, credits</span></li>
+    </ol>
+    <p>I wrote it after the Pakistan earthquake maps. With it installed, the Pakistan climate map and the Texas series (sheets 03 and 05) were each produced from a short request in the same style. It starts by asking whether a map should show where events originate or where they are felt, the check behind sheet 02.</p>
+  </div>
+</article>
+
+<footer>
+  <span>Haider Waseem Anwar · Urban and Regional Sciences, Texas A&amp;M University</span>
+  <span class="mono">anwar_haider@tamu.edu</span>
+</footer>
+
+</div>
 </body>
 </html>
