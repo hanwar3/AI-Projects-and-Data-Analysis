@@ -12,7 +12,6 @@ Oblique 3D shaded-relief maps of flood, earthquake and climate hazard, built in 
 | [Pakistan temperature × rainfall](maps/pakistan-climate.jpg) | Where is it hot, wet, or both? | TerraClimate 2000–2021 normals (~4 km) | `code/Pak_Climate_Map.py`, `code/fetch_climate.py` |
 | [Texas temperature × rainfall](maps/texas-climate.jpg) | Same question, Texas | TerraClimate 2000–2021 | `code/Texas_Hazard_Maps.py --map climate` |
 | [Texas flood insurance claims](maps/texas-flood-nfip.jpg) | Where has flood damage actually been paid out? | FEMA OpenFEMA NFIP redacted claims, 2000–2025: 272,924 claims, $16.0B paid | `code/Texas_Hazard_Maps.py --map flood` |
-| [Texas earthquakes](maps/texas-earthquakes.jpg) | Where do Texas ruptures begin? | USGS ComCat, M ≥ 2.5 | `code/Texas_Hazard_Maps.py --map quake` |
 
 ## Report
 
@@ -26,7 +25,7 @@ Oblique 3D shaded-relief maps of flood, earthquake and climate hazard, built in 
 4. A purpose-built oblique renderer (perspective camera, real height displacement, occlusion) in NumPy. No GPU needed.
 5. Typography, legend and credits composed with Pillow; 3840 × 2160 export.
 
-The Pakistan climate and all Texas maps use the reusable renderer in [`../oblique-relief-maps-skill`](../oblique-relief-maps-skill), which these scripts find automatically.
+The Pakistan climate and Texas maps use the renderer modules in `code/` (`terrain.py`, `shading.py`, `oblique.py`).
 
 ## Run
 

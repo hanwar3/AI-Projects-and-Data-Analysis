@@ -7,11 +7,10 @@ Quantitative analysis of FEMA data, hazard maps and agentic AI tools by a PhD ca
 | Project | What it is | Folder |
 |---|---|---|
 | FEMA hazard mitigation grants, FY2015–2024 | χ², Welch ANOVA and OLS (HC3, state-clustered) on 7,781 OpenFEMA HMA projects; notebook with code and outputs | [`projects/fema-hma-analysis`](projects/fema-hma-analysis) |
-| Hazard maps: Pakistan and Texas | 4K oblique relief maps of earthquakes, ground shaking, floods, FEMA NFIP claims and climate, with an 11-page seismicity report | [`projects/hazard-maps`](projects/hazard-maps) |
+| Hazard maps: Pakistan and Texas | 4K oblique relief maps of Pakistan earthquakes, ground shaking, floods and climate, and Texas FEMA NFIP claims and climate, with an 11-page seismicity report | [`projects/hazard-maps`](projects/hazard-maps) |
 | RFP Monitor | Watches 17 public procurement sources for disaster-risk and resilience funding calls; Streamlit dashboard | [`projects/rfp-monitor`](projects/rfp-monitor) |
 | jobhunt | Local job search: multi-source collection, transparent scoring against a CV, application tracking | [`projects/jobhunt`](projects/jobhunt) |
-| oblique-relief-maps | A Claude skill that packages the mapping method for reuse by AI agents | [`projects/oblique-relief-maps-skill`](projects/oblique-relief-maps-skill) |
 
 All projects were built with Claude Code as an agentic pair programmer: I set the question, the data sources and the checks; the agent wrote and ran the code; I reviewed the results.
 
-Contact: anwar_haider@tamu.edu · [LinkedIn](https://www.linkedin.com/in/haideranwar/) · [Professional website](https://hanwar3professionalwebsite.vercel.app)
+Contact: anwar_haider@tamu.edu · [LinkedIn](https://www.linkedin.com/in/haideranwar/)

@@ -4,7 +4,7 @@ Pak_Climate_Map.py
 Bivariate climate map of Pakistan: mean annual temperature x mean annual precipitation,
 TerraClimate 2000-2021, draped on oblique 3D shaded relief.
 
-Built on the `oblique-relief-maps` skill (terrain / shading / oblique modules).
+Uses the oblique renderer in terrain.py, shading.py and oblique.py.
 
 Colour scheme (four named corners, per request):
     cool + dry  -> pale neutral  (high cold deserts: Karakoram, Chagai)
@@ -27,13 +27,8 @@ import numpy as np
 from PIL import ImageDraw
 from scipy.ndimage import gaussian_filter, map_coordinates
 
-# The renderer lives in the oblique-relief-maps skill. Use the copy in this repo if
-# present, otherwise the installed Claude skill.
-SKILL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
-                     "oblique-relief-maps-skill", "scripts")
-if not os.path.isdir(SKILL):
-    SKILL = os.path.expanduser(r"~/.claude/skills/oblique-relief-maps/scripts")
-sys.path.insert(0, SKILL)
+# Renderer modules (terrain.py, shading.py, oblique.py) sit next to this script.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from terrain import fetch_dem                                        # noqa: E402
 from shading import TerrainCanvas, edge_falloff, bivariate_rgb       # noqa: E402
 from oblique import (Camera, autoframe, render, compose, draw_title,  # noqa: E402

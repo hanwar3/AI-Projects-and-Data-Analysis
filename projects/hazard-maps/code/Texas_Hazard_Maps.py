@@ -11,7 +11,7 @@ Timelines deliberately mirror the Pakistan maps: the seismic catalogue runs the 
 instrumental record, the climate normals use TerraClimate's 2000-2021 coverage, and
 the flood layer uses the modern 2000-2025 window.
 
-Built on the `oblique-relief-maps` skill.
+Uses the oblique renderer in terrain.py, shading.py and oblique.py.
 
     py Texas_Hazard_Maps.py --map quake --preview
     py Texas_Hazard_Maps.py --map flood
@@ -30,13 +30,8 @@ import requests
 from PIL import ImageDraw
 from scipy.ndimage import gaussian_filter, map_coordinates
 
-# The renderer lives in the oblique-relief-maps skill. Use the copy in this repo if
-# present, otherwise the installed Claude skill.
-SKILL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..",
-                     "oblique-relief-maps-skill", "scripts")
-if not os.path.isdir(SKILL):
-    SKILL = os.path.expanduser(r"~/.claude/skills/oblique-relief-maps/scripts")
-sys.path.insert(0, SKILL)
+# Renderer modules (terrain.py, shading.py, oblique.py) sit next to this script.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from terrain import fetch_dem, lonlat_to_grid                          # noqa: E402
 from shading import (TerrainCanvas, edge_falloff, point_density,       # noqa: E402
                      bivariate_rgb, RAMP_VIOLET)

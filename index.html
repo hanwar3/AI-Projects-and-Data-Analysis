@@ -158,7 +158,6 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
   <div class="who">Haider Waseem Anwar <span>· PhD Candidate, Texas A&amp;M Hazard Reduction &amp; Recovery Center</span></div>
   <ul class="contact">
     <li><a href="https://www.linkedin.com/in/haideranwar/" rel="noopener">LinkedIn</a></li>
-    <li><a href="https://hanwar3professionalwebsite.vercel.app" rel="noopener">Website</a></li>
     <li><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis" rel="noopener">GitHub</a></li>
     <li class="plain">anwar_haider@tamu.edu</li>
   </ul>
@@ -180,13 +179,12 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <tr><td>01</td><td><a href="#hma">Federal hazard mitigation grants, FY2015–2024</a></td><td class="dim">OpenFEMA HMA Projects</td><td class="dim">χ², Welch ANOVA, OLS with HC3</td></tr>
     <tr><td colspan="4" class="group">Spatial analysis</td></tr>
     <tr><td>02</td><td><a href="#earthquakes">Pakistan earthquakes: origin vs impact</a></td><td class="dim">USGS ComCat, ShakeMap</td><td class="dim">Density, MMI composite, Gutenberg–Richter</td></tr>
-    <tr><td>03</td><td><a href="#texas">Texas flood claims, climate, earthquakes</a></td><td class="dim">OpenFEMA NFIP, TerraClimate</td><td class="dim">Payout-weighted density, bivariate</td></tr>
+    <tr><td>03</td><td><a href="#texas">Texas flood claims and climate</a></td><td class="dim">OpenFEMA NFIP, TerraClimate</td><td class="dim">Payout-weighted density, bivariate</td></tr>
     <tr><td>04</td><td><a href="#floods">Pakistan floods, 2010 and 2022</a></td><td class="dim">UN OCHA, UNOSAT, Copernicus</td><td class="dim">Raster overlay on 30 m terrain</td></tr>
     <tr><td>05</td><td><a href="#climate">Pakistan temperature × rainfall</a></td><td class="dim">TerraClimate</td><td class="dim">Bivariate classification</td></tr>
     <tr><td colspan="4" class="group">Agentic AI tools</td></tr>
     <tr><td>06</td><td><a href="#rfp">RFP Monitor</a></td><td class="dim">17 procurement portals</td><td class="dim">Scraping, scoring, Streamlit</td></tr>
     <tr><td>07</td><td><a href="#jobhunt">jobhunt</a></td><td class="dim">12 job sources</td><td class="dim">Weighted scoring, FastAPI</td></tr>
-    <tr><td>08</td><td><a href="#skill">oblique-relief-maps skill</a></td><td class="dim">DEMs, any hazard layer</td><td class="dim">Claude skill, NumPy renderer</td></tr>
   </tbody>
 </table>
 </div>
@@ -211,10 +209,6 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     </div>
   </aside>
   <div class="body">
-    <figure>
-        <a class="img" href="assets/img/diagram-hma.png"><img src="assets/img/diagram-hma.png" width="1600" height="469" alt="Flowchart: OpenFEMA data is filtered, classified and log-transformed, then tested with chi-square and Welch ANOVA and modelled with OLS; if variance is not constant, HC3 and clustered errors are used." loading="lazy"></a>
-        <figcaption>Analysis workflow (diagram built in FigJam)</figcaption>
-      </figure>
     <ul class="findings">
       <li><span class="stat">$7.83B</span><p>federal share obligated across 7,781 projects. Florida, Texas, Louisiana, California and Puerto Rico together received 53% of it.</p></li>
       <li><span class="stat">V = 0.36</span><p>The project mix depends strongly on the program (χ²(10) = 1,970, p &lt; 0.001). FMA is dominated by home elevations and buyouts, HMGP carries most generator and warning projects, and BRIC/PDM leans to safe rooms and other structural work.</p></li>
@@ -322,32 +316,26 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
 <article class="sheet" id="texas">
   <aside class="block">
     <div class="no">03</div>
-    <h3>Texas: flood damage paid, climate, earthquakes</h3>
-    <p class="q">Where has flood damage actually been paid out, and how does that sit against climate and seismicity?</p>
+    <h3>Texas: flood damage paid and climate</h3>
+    <p class="q">Where has flood damage actually been paid out, and how does that sit against climate?</p>
     <dl class="spec">
-      <div><dt>Data</dt><dd>OpenFEMA NFIP redacted claims 2000–2025 (<span class="num">272,924</span> claims, <span class="num">$16.0B</span> paid); USGS ComCat; TerraClimate 2000–2021; Census TIGER/Line</dd></div>
+      <div><dt>Data</dt><dd>OpenFEMA NFIP redacted claims 2000–2025 (<span class="num">272,924</span> claims, <span class="num">$16.0B</span> paid); TerraClimate 2000–2021; Census TIGER/Line</dd></div>
       <div><dt>Methods</dt><dd>Paged API pull, payout-weighted density with log stretch, bivariate colour classes</dd></div>
-      <div><dt>Tools</dt><dd>Python, requests, NumPy, SciPy, xarray, oblique-relief-maps skill</dd></div>
+      <div><dt>Tools</dt><dd>Python, requests, NumPy, SciPy, xarray, custom oblique renderer</dd></div>
     </dl>
     <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Texas_Hazard_Maps.py">Code</a></div>
   </aside>
   <div class="body">
     <p>The flood map shows realised, insured damage rather than modelled hazard, so uninsured rural floodplains can appear blank and still flood. Harris County dwarfs every other cluster, so density is log-stretched to keep Beaumont, the Rio Grande Valley, Central Texas and Dallas–Fort Worth visible.</p>
-    <div class="trio">
+    <div class="pair">
       <figure>
         <a class="img" href="projects/hazard-maps/maps/texas-flood-nfip.jpg"><img src="assets/img/texas-flood-nfip-sm.jpg" width="960" height="540" alt="Relief map of Texas with paid NFIP flood claims concentrated around Houston." loading="lazy"></a>
         <figcaption>NFIP paid flood claims, weighted by payout</figcaption>
       </figure>
-      <div class="col">
-        <figure>
-          <a class="img" href="projects/hazard-maps/maps/texas-climate.jpg"><img src="assets/img/texas-climate-sm.jpg" width="960" height="540" alt="Texas coloured by temperature and rainfall: dry west, wet east." loading="lazy"></a>
-          <figcaption>Temperature × rainfall, 2000–2021</figcaption>
-        </figure>
-        <figure>
-          <a class="img" href="projects/hazard-maps/maps/texas-earthquakes.jpg"><img src="assets/img/texas-earthquakes-sm.jpg" width="960" height="540" alt="Texas earthquake epicentres concentrated in the Permian Basin, with Oklahoma's induced seismicity at the top edge." loading="lazy"></a>
-          <figcaption>Earthquake epicentres, M ≥ 2.5</figcaption>
-        </figure>
-      </div>
+      <figure>
+        <a class="img" href="projects/hazard-maps/maps/texas-climate.jpg"><img src="assets/img/texas-climate-sm.jpg" width="960" height="540" alt="Texas coloured by temperature and rainfall: dry west, wet east." loading="lazy"></a>
+        <figcaption>Temperature × rainfall, 2000–2021</figcaption>
+      </figure>
     </div>
   </div>
 </article>
@@ -381,7 +369,7 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <dl class="spec">
       <div><dt>Data</dt><dd>TerraClimate monthly grids, ~4 km, 2000–2021</dd></div>
       <div><dt>Methods</dt><dd>Climate normals, regridding to terrain, bivariate classes, log-scaled rainfall</dd></div>
-      <div><dt>Tools</dt><dd>Python, xarray, adlfs, NumPy, oblique-relief-maps skill</dd></div>
+      <div><dt>Tools</dt><dd>Python, xarray, adlfs, NumPy, custom oblique renderer</dd></div>
     </dl>
     <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/hazard-maps/code/Pak_Climate_Map.py">Code</a></div>
   </aside>
@@ -436,26 +424,6 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
         <figcaption>Pipeline (diagram built in FigJam)</figcaption>
       </figure>
     <p>Scoring is a weighted model, not an LLM call, so rankings are stable and <span class="mono">jobhunt show</span> prints the arithmetic. A monthly cap stops paid scrapers before they exceed budget.</p>
-  </div>
-</article>
-
-<article class="sheet" id="skill">
-  <aside class="block">
-    <div class="no">08</div>
-    <h3>oblique-relief-maps: a Claude skill</h3>
-    <p class="q">Packages the mapping method so an AI agent can reproduce it from a short request.</p>
-    <dl class="spec">
-      <div><dt>Contents</dt><dd>SKILL.md, references (cartography, data sources, pitfalls), scripts (terrain, shading, renderer)</dd></div>
-      <div><dt>Tools</dt><dd>Python, NumPy, SciPy, Pillow; CPU only</dd></div>
-    </dl>
-    <div class="links"><a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/oblique-relief-maps-skill">Skill files</a></div>
-  </aside>
-  <div class="body">
-    <figure>
-        <a class="img" href="assets/img/diagram-skill.png"><img src="assets/img/diagram-skill.png" width="1600" height="365" alt="Flowchart: a map request first asks origin or impact, then terrain and the chosen layer are shaded, rendered in oblique 3D and composed into a 4K map." loading="lazy"></a>
-        <figcaption>Skill workflow (diagram built in FigJam)</figcaption>
-      </figure>
-    <p>I wrote it after the Pakistan earthquake maps. With it installed, the Pakistan climate map and the Texas series (sheets 03 and 05) were each produced from a short request in the same style. It starts by asking whether a map should show where events originate or where they are felt, the check behind sheet 02.</p>
   </div>
 </article>
 
