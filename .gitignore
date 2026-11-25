@@ -7,3 +7,4 @@ data/
 cache/
 .venv/
 .pytest_cache/
+*.egg-info/

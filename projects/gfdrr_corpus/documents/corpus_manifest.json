@@ -1,0 +1,15 @@
+{
+  "document_count": 22,
+  "section_chunk_count": 88,
+  "pii_trap_documents": 6,
+  "classification_counts": {
+    "Public": 9,
+    "Official Use Only": 7,
+    "Confidential": 3,
+    "Strictly Confidential": 3
+  },
+  "thematic_coverage": 10,
+  "priority_coverage": 4,
+  "hazard_countries": 14,
+  "benchmark_queries": 32
+}

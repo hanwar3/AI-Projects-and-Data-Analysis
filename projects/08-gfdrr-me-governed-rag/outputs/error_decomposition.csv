@@ -1,0 +1,6 @@
+config_label,retrieval_hit_synthesis_complete,retrieval_hit_synthesis_partial,retrieval_miss_abstained,retrieval_miss_off_target
+(A) Dense-only (SVD Semantic),15,11,0,0
+(B) BM25-only (Lexical),17,9,0,0
+(C) Hybrid RRF (Unweighted),17,9,0,0
+(D) Hybrid RRF + Reranker + Metadata Filter,22,4,0,0
+(E) Hybrid RRF + Reranker + Filter (HITL-Tuned),21,5,0,0

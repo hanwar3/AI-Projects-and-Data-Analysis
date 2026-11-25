@@ -136,10 +136,70 @@ ol.line span { color: var(--muted); font-family: var(--mono); font-size: .74rem;
 footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink); display: flex; flex-wrap: wrap;
   justify-content: space-between; gap: 12px 24px; font-size: .9rem; color: var(--muted); }
 
+/* ---------- governed AI diagrams & interactive static explorers ---------- */
+.svg-frame { border: 1px solid var(--rule); background: var(--panel); padding: 14px 16px; overflow-x: auto; }
+.svg-frame svg { width: 100%; min-width: 680px; height: auto; display: block; color: var(--ink); }
+.explorer { border: 1px solid var(--ink); background: var(--paper); }
+.exp-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px;
+  padding: 10px 14px; background: var(--panel); border-bottom: 1px solid var(--ink); }
+.exp-head strong { font: 600 .88rem/1.3 var(--sans); }
+.exp-head span { font: 400 .74rem/1.3 var(--mono); color: var(--muted); }
+.exp-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(136px, 1fr)); border-bottom: 1px solid var(--rule); }
+.exp-tab { appearance: none; background: var(--paper); color: var(--ink); border: none; border-right: 1px solid var(--rule);
+  border-bottom: 2px solid transparent; padding: 9px 10px; text-align: left; cursor: pointer; font: inherit; transition: background .12s ease; }
+.exp-tab:last-child { border-right: none; }
+.exp-tab:hover { background: var(--panel); }
+.exp-tab.active { background: var(--panel); border-bottom-color: var(--water); }
+.exp-tab .tab-title { display: block; font: 600 .77rem/1.28 var(--sans); margin-bottom: 2px; }
+.exp-tab .tab-badge { display: block; font: 400 .67rem/1.28 var(--mono); color: var(--muted); }
+.exp-panel { padding: 14px; display: grid; gap: 12px; }
+.exp-query-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 16px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--rule); font-size: .88rem; }
+.mono-label { font: 500 .66rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--contour); margin-right: 6px; }
+.mono-sm { font: 400 .76rem/1.5 var(--mono); color: var(--muted); margin: 0; }
+.dim-sm { font: 400 .72rem/1.35 var(--mono); color: var(--muted); }
+.exp-subbox { border: 1px solid var(--rule); padding: 10px 12px; display: grid; gap: 8px; background: var(--paper); }
+.exp-subbox.compact { gap: 4px; }
+.subhead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px 12px;
+  font: 600 .8rem/1.3 var(--sans); }
+.pill { font: 500 .68rem/1.2 var(--mono); padding: 3px 7px; border: 1px solid var(--rule); background: var(--panel); }
+.pill-ok { color: var(--water); border-color: var(--water); }
+.pill-warn { color: var(--contour); border-color: var(--contour); }
+.pill-muted { color: var(--muted); }
+.tier-tag { font: 500 .68rem/1.2 var(--mono); padding: 2px 5px; background: var(--panel); border: 1px solid var(--rule); white-space: nowrap; }
+table.data.exp-table { min-width: 0; font-size: .79rem; }
+table.data.exp-table th, table.data.exp-table td { text-align: left; padding: 6px 10px 6px 0; vertical-align: top; }
+table.data.exp-table th.num, table.data.exp-table td.num { text-align: right; }
+.exp-table tr.row-flash td { background: var(--panel); outline: 1px solid var(--water); }
+.diff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.diff-col { background: var(--panel); border: 1px solid var(--rule); padding: 8px 10px; }
+.diff-label { font: 500 .66rem/1.3 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+mark.redact-tok { background: transparent; color: var(--contour); font-family: var(--mono); font-weight: 500;
+  border-bottom: 1.5px solid var(--contour); padding: 0 1px; }
+.ans-box { background: var(--panel); border-left: 3px solid var(--water); padding: 10px 12px; font-size: .85rem; display: grid; gap: 6px; }
+.ans-lead { font-weight: 600; font-size: .82rem; color: var(--muted); }
+.ans-bullet { padding-left: 12px; position: relative; line-height: 1.5; }
+.ans-bullet::before { content: "·"; position: absolute; left: 2px; font-weight: 700; color: var(--water); }
+.cite-chip { appearance: none; border: 1px solid var(--water); background: var(--paper); color: var(--water);
+  font: 500 .71rem/1.2 var(--mono); padding: 1px 5px; cursor: pointer; margin-left: 3px; }
+.cite-chip:hover { background: var(--water); color: var(--paper); }
+.prov-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 16px; }
+.prov-grid code, .exp-query-bar code, .note code { font-family: var(--mono); font-size: .75rem; color: var(--ink); }
+.tamper-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding-top: 4px; border-top: 1px solid var(--rule); }
+.btn-minor { appearance: none; background: var(--panel); color: var(--ink); border: 1px solid var(--ink);
+  font: 500 .74rem/1.2 var(--mono); padding: 6px 10px; cursor: pointer; }
+.btn-minor:hover { border-color: var(--contour); color: var(--contour); }
+.ckpt-list { margin: 2px 0 0; padding-left: 18px; display: grid; gap: 2px; }
+.playbook-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.playbook-card { border: 1px solid var(--rule); background: var(--panel); padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.playbook-card .track-no { font: 500 .68rem/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--contour); }
+.playbook-card h4 { font: 600 .92rem/1.25 var(--sans); margin: 0; }
+.playbook-card p { font-size: .82rem; color: var(--muted); margin: 0; line-height: 1.45; }
+
 @media (max-width: 900px) {
   .sheet, .intro { grid-template-columns: minmax(0, 1fr); }
   .block { position: static; }
-  .trio { grid-template-columns: minmax(0, 1fr); }
+  .trio, .playbook-grid, .diff-grid, .prov-grid { grid-template-columns: minmax(0, 1fr); }
   ol.line { grid-auto-flow: row; grid-auto-columns: auto; }
   ol.line li { padding: 0 0 14px 28px; }
   ol.line li::before { top: 0; bottom: 0; left: 6px; right: auto; width: 2px; height: auto; }
@@ -166,8 +226,8 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
 <section class="intro">
   <h1>Disaster data, analysed and mapped, with tools I built using agentic AI.</h1>
   <div>
-    <p>Each sheet below states the question, the data, the method and the tools, then shows the result. All code is in the repository, and every number is computed from public FEMA, USGS and UN data.</p>
-    <p class="stack">Python · pandas · statsmodels · SciPy · NumPy · GeoPandas · rasterio · xarray · DuckDB · Stata · SQLite · Streamlit · FastAPI · Playwright · Claude Code</p>
+    <p>Each sheet below states the question, the data, the method and the tools, then shows the result. All code is in the repository, and every number is computed from public FEMA, USGS and UN data or reproducible local benchmarks.</p>
+    <p class="stack">Python · pandas · statsmodels · SciPy · NumPy · scikit-learn · Pydantic v2 · GeoPandas · rasterio · xarray · DuckDB · Stata · SQLite · BM25/RRF · HMAC-SHA256 · OpenTelemetry · Streamlit · FastAPI · Playwright · Claude Code</p>
   </div>
 </section>
 
@@ -185,6 +245,9 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
     <tr><td colspan="4" class="group">Agentic AI tools</td></tr>
     <tr><td>06</td><td><a href="#rfp">RFP Monitor</a></td><td class="dim">17 procurement portals</td><td class="dim">Scraping, scoring, Streamlit</td></tr>
     <tr><td>07</td><td><a href="#jobhunt">jobhunt</a></td><td class="dim">12 job sources</td><td class="dim">Weighted scoring, FastAPI</td></tr>
+    <tr><td colspan="4" class="group">Governed RAG, evaluation &amp; sandboxed agentic AI (08–09)</td></tr>
+    <tr><td>08</td><td><a href="#gfdrr-rag">Governed M&amp;E grant portfolio RAG (GFDRR 2026–2030)</a></td><td class="dim">22 DRM &amp; M&amp;E docs (88 sections, 4 WB tiers)</td><td class="dim">BM25 + Dense + RRF + Reranker, 3-layer PII, HMAC watermark, HITL tuning</td></tr>
+    <tr><td>09</td><td><a href="#gfdrr-agent">Sandboxed multi-agent DRM workflow &amp; staff AI playbook</a></td><td class="dim">Grant M&amp;E RAG + 14-country hazard exposure</td><td class="dim">Scoped capabilities, Critic arbitration, SQLite recovery, HIC gate</td></tr>
   </tbody>
 </table>
 </div>
@@ -427,11 +490,297 @@ footer { padding-block: 56px; margin-top: 64px; border-top: 2px solid var(--ink)
   </div>
 </article>
 
+<!-- ============ GOVERNED RAG & SANDBOXED AGENTIC AI ============ -->
+<div class="group-head" id="governed-ai">
+  <h2>Governed RAG, evaluation &amp; sandboxed agentic AI (08–09)</h2>
+  <p>Auditable retrieval, 4-tier World Bank classification gating, 3-checkpoint PII redaction, cryptographic provenance and capability-scoped agents for DRM &amp; M&amp;E</p>
+</div>
+
+<article class="sheet" id="gfdrr-rag">
+  <aside class="block">
+    <div class="no">08</div>
+    <h3>Governed M&amp;E grant portfolio RAG platform</h3>
+    <p class="q">Can multilateral grant retrieval enforce World Bank classification tiers, zero PII leakage and cryptographic provenance while improving ranking from M&amp;E reviewer feedback?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>Synthetic/public-domain corpus of <span class="num">22</span> section-numbered DRM &amp; M&amp;E documents (<span class="num">88</span> chunks across GFDRR's 4 Priority Areas, 10 Thematic Areas, FCV &amp; Gender pillars, and 4 WB AMS 6.21A tiers); <span class="num">32</span> graded benchmark queries; <span class="num">6</span> PII trap field notes</dd></div>
+      <div><dt>Guardrails</dt><dd>Hard pre-retrieval WB classification gate + immutable SQLite audit log; dynamic PII redaction at 3 checkpoints (chunk, snippet, output); entity-calibrated abstention gate; SHA-256 + HMAC-SHA256 + zero-width watermark</dd></div>
+      <div><dt>Methods</dt><dd>4-way retrieval ablation (Dense SVD, Okapi BM25, Hybrid RRF, Hybrid RRF + Reranker + Metadata Filter); 2×2 error decomposition; 4-fold out-of-fold HITL weight tuning with 2,000-resample paired bootstrap CIs; Cohen's κ<sub>w</sub></dd></div>
+      <div><dt>Tools</dt><dd>Python, Pydantic v2, scikit-learn, NumPy, SQLite, FastAPI, Streamlit, Matplotlib, pytest</dd></div>
+      <div><dt>Tests</dt><dd><span class="num">23</span> passing (classification, PII, tamper, ablation, HITL, API)</dd></div>
+    </dl>
+    <div class="links">
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/08-gfdrr-me-governed-rag">Code and README</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/08-gfdrr-me-governed-rag/DESIGN_DECISIONS.md">Design decisions</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/08-gfdrr-me-governed-rag/outputs">Result tables (CSV)</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/gfdrr_corpus">GFDRR corpus</a>
+    </div>
+  </aside>
+  <div class="body">
+    <ul class="findings">
+      <li><span class="stat">0.910</span><p>nDCG@5 after M&amp;E reviewer HITL tuning (4-fold out-of-fold across 208 chunk judgments), up from 0.824 on unweighted RRF (+0.087; 95% paired bootstrap CI +0.039 to +0.145, p = 0.001). Recall@5 rises from 0.781 to 0.926.</p></li>
+      <li><span class="stat">0% leak</span><p>100% classification compliance across all 4 World Bank AMS 6.21A tiers, 100% PII redaction recall across 3 independent checkpoints, and 1.00 Abstention F1 on unauthorized and out-of-portfolio queries.</p></li>
+      <li><span class="stat">κ<sub>w</sub> = 0.46</span><p>Quadratic-weighted Cohen's κ between M&amp;E specialist labels and an automated rubric judge. The automated judge recalls 45/51 primary sections but over-credits S1.0 background sections—showing why human-in-the-loop calibration cannot be replaced by uncalibrated LLM/heuristic judges.</p></li>
+    </ul>
+
+    <figure>
+      <div class="svg-frame" role="img" aria-label="Architecture diagram of the 7-stage Governed M&amp;E RAG pipeline: Ingestion, WB Classification Gate, Hybrid BM25 + Dense + RRF + Reranker, 3-Checkpoint PII Redactor, Citation Verifier and Abstention Gate, Cryptographic Provenance Watermark, and SQLite HITL Feedback Loop.">
+        <svg viewBox="0 0 980 215" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr-rag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <!-- Stage boxes -->
+          <rect x="10" y="24" width="122" height="86" fill="var(--paper)" stroke="currentColor" stroke-width="1.4"/>
+          <text x="18" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">01 INGESTION</text>
+          <text x="18" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">Section Chunker</text>
+          <text x="18" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">S1.0–S4.0 + SHA256</text>
+          <text x="18" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Pydantic v2 links</text>
+
+          <line x1="132" y1="67" x2="148" y2="67" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+
+          <rect x="150" y="24" width="132" height="86" fill="var(--paper)" stroke="var(--contour)" stroke-width="1.8"/>
+          <text x="158" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">02 POLICY GATE</text>
+          <text x="158" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">WB AMS 6.21A</text>
+          <text x="158" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">4-Tier Pre-Filter</text>
+          <text x="158" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Immutable SQLite</text>
+
+          <line x1="282" y1="67" x2="298" y2="67" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+
+          <rect x="300" y="24" width="148" height="86" fill="var(--paper)" stroke="var(--water)" stroke-width="1.8"/>
+          <text x="308" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--water)">03 HYBRID RETRIEVAL</text>
+          <text x="308" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">BM25 + Dense SVD</text>
+          <text x="308" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Weighted RRF Fusion</text>
+          <text x="308" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Section Reranker</text>
+
+          <line x1="448" y1="67" x2="464" y2="67" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+
+          <rect x="466" y="24" width="136" height="86" fill="var(--paper)" stroke="var(--contour)" stroke-width="1.8"/>
+          <text x="474" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">04 PII GUARDRAIL</text>
+          <text x="474" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">3-Layer Redactor</text>
+          <text x="474" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Ckpt A: Chunks</text>
+          <text x="474" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Ckpt B/C: Cite &amp; Out</text>
+
+          <line x1="602" y1="67" x2="618" y2="67" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+
+          <rect x="620" y="24" width="144" height="86" fill="var(--paper)" stroke="currentColor" stroke-width="1.4"/>
+          <text x="628" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--water)">05 GROUNDING GATE</text>
+          <text x="628" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">Cite &amp; Abstain</text>
+          <text x="628" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Entity OOV Check</text>
+          <text x="628" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Exact [DOC §S, p.X]</text>
+
+          <line x1="764" y1="67" x2="780" y2="67" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+
+          <rect x="782" y="24" width="188" height="86" fill="var(--paper)" stroke="var(--water)" stroke-width="1.8"/>
+          <text x="790" y="43" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--water)">06 PROVENANCE RECEIPT</text>
+          <text x="790" y="61" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">HMAC-SHA256 + Watermark</text>
+          <text x="790" y="77" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">Zero-width Unicode seal</text>
+          <text x="790" y="92" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">CLI verify-provenance</text>
+
+          <!-- Continuous HITL Feedback Return Loop -->
+          <rect x="300" y="146" width="464" height="50" fill="var(--paper)" stroke="var(--rule)" stroke-width="1.4"/>
+          <text x="312" y="166" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">07 CONTINUOUS HITL FEEDBACK LOOP (SQLite)</text>
+          <text x="312" y="184" font-family="Public Sans, sans-serif" font-size="10.5" fill="currentColor">M&amp;E specialists grade chunks (2 / 1 / 0) → 4-fold cross-validated RRF &amp; section reranker weight update (+0.087 nDCG@5)</text>
+          <path d="M 876 110 L 876 171 L 764 171" fill="none" stroke="currentColor" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arr-rag)"/>
+          <path d="M 300 171 L 245 171 L 245 130 L 374 130 L 374 110" fill="none" stroke="var(--water)" stroke-width="1.4" marker-end="url(#arr-rag)"/>
+        </svg>
+      </div>
+      <figcaption>Seven-stage governed M&amp;E RAG pipeline. Unauthorized tiers are dropped before scoring; HITL labels tune Stage 03 weights out-of-fold.</figcaption>
+    </figure>
+
+    <div class="pair">
+      <figure>
+        <a class="img" href="projects/08-gfdrr-me-governed-rag/outputs/fig_rag_ablation_hitl.png"><img src="assets/img/gfdrr-rag-ablation.png" width="2514" height="968" alt="Two-panel chart: 4-way retrieval ablation showing Hybrid RRF + Reranker + Filter reaching 0.906 nDCG@5, and 4-fold out-of-fold HITL tuning lifting nDCG@5 from 0.824 to 0.910." loading="lazy"></a>
+        <figcaption>4-way retrieval ablation and 4-fold out-of-fold HITL tuning uplift (95% bootstrap CI)</figcaption>
+      </figure>
+      <figure>
+        <a class="img" href="projects/08-gfdrr-me-governed-rag/outputs/fig_rag_error_kappa.png"><img src="assets/img/gfdrr-rag-diagnostics.png" width="2604" height="946" alt="Stacked bars of retrieval vs synthesis error decomposition across 26 answerable queries and 3x3 confusion matrix between human M&amp;E specialist grades and automated rubric judge." loading="lazy"></a>
+        <figcaption>Retrieval vs. synthesis decomposition (22/26 complete) and human-vs-judge calibration (κ<sub>w</sub> = 0.46)</figcaption>
+      </figure>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Table 3. Governed RAG 4-way retrieval ablation &amp; HITL tuning scorecard (N = 32 benchmark queries)</caption>
+        <thead><tr><th>Configuration</th><th>Recall@5</th><th>MRR</th><th>nDCG@5</th><th>Complete synth.</th><th>Abstention F1</th><th>PII recall</th><th>WB class.</th><th>P95 latency</th></tr></thead>
+        <tbody>
+          <tr><td>(A) Dense-only (SVD semantic)</td><td>0.826</td><td>0.952</td><td>0.852</td><td>15 / 26</td><td>1.000</td><td>100%</td><td>100%</td><td>6.8 ms</td></tr>
+          <tr><td>(B) BM25-only (Okapi lexical)</td><td>0.783</td><td>0.955</td><td>0.832</td><td>17 / 26</td><td>1.000</td><td>100%</td><td>100%</td><td>7.1 ms</td></tr>
+          <tr><td>(C) Hybrid RRF (unweighted, k = 60)</td><td class="neg">0.781</td><td>0.942</td><td class="neg">0.824</td><td>17 / 26</td><td>1.000</td><td>100%</td><td>100%</td><td>7.1 ms</td></tr>
+          <tr><td>(D) Hybrid RRF + Reranker + Metadata Filter</td><td class="pos">0.919</td><td class="pos">0.962</td><td class="pos">0.906</td><td>22 / 26</td><td>1.000</td><td>100%</td><td>100%</td><td>12.2 ms</td></tr>
+          <tr><td>(E) Hybrid RRF + Reranker (HITL-tuned)</td><td class="pos">0.926</td><td class="pos">0.962</td><td class="pos">0.910</td><td>21 / 26</td><td>1.000</td><td>100%</td><td>100%</td><td>12.3 ms</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Citation precision is 100% across all answered queries. Unweighted RRF (C) slightly trails Dense-only (A) because pure rank averaging dilutes semantic matches when paraphrase queries have zero surface-word overlap; adding section-intent reranking and thematic/country scope (D–E) resolves both failure modes.</p>
+    </div>
+
+    <div class="explorer" aria-label="Interactive Governed RAG Static Trace Explorer">
+      <div class="exp-head">
+        <strong>Interactive Governed M&amp;E Query &amp; Provenance Explorer</strong>
+        <span>Client-side JSON traces · Click any case or citation chip · Zero server required</span>
+      </div>
+      <div id="rag-explorer"><p class="exp-panel mono-sm">Loading verified GFDRR RAG traces…</p></div>
+    </div>
+
+    <p class="note">Domain &amp; engineering decisions: every grant review mentions the same country and grant code across all four sections, so naive sliding-window chunks confuse S1.0 physical flood exposure (e.g. 33.4M people in Indus floodplains) with S3.0 verified target outcomes (6.4M beneficiaries). Section-preserving ingestion plus section-intent reranking separates baseline risk from M&amp;E results. Limits: the 22-document corpus and 6 PII trap notes are synthetic English records; operational World Bank PDFs include scanned Aide-Mémoire tables and multilingual annexes requiring OCR and transformer NER alongside deterministic regex rules.</p>
+  </div>
+</article>
+
+<article class="sheet" id="gfdrr-agent">
+  <aside class="block">
+    <div class="no">09</div>
+    <h3>Sandboxed multi-agent DRM workflow &amp; staff AI playbook</h3>
+    <p class="q">When does a multi-agent workflow genuinely beat single-pass RAG on country resilience briefs, and how do we enforce least privilege, crash recovery and staff readiness?</p>
+    <dl class="spec">
+      <div><dt>Data</dt><dd>Project 08 Governed M&amp;E RAG + <span class="num">14</span>-country geospatial multi-hazard exposure table (flood pop., seismic MMI VI+ share, extreme heat days &gt;35°C, 100M resilience target share)</dd></div>
+      <div><dt>Guardrails</dt><dd>Per-agent capability manifests (e.g. <span class="mono">Grant M&amp;E Analyst ≤ Official Use Only</span>; no <span class="mono">shell.exec</span> or <span class="mono">export.external</span>); <span class="mono">Path.resolve()</span> workspace jail; prompt-injection scanner; token/cost/step caps; SQLite checkpoints; mandatory HMAC-signed HIC gate</dd></div>
+      <div><dt>Methods</dt><dd>3-way architecture benchmark across <span class="num">8</span> complex multi-country briefs; OpenTelemetry span tracing; deterministic crash-and-resume testing; 3-tier enterprise staff upskilling curriculum + runnable lab</dd></div>
+      <div><dt>Tools</dt><dd>Python, Pydantic v2, SQLite, OpenTelemetry-style JSON traces, Matplotlib, Jupyter, pytest</dd></div>
+      <div><dt>Tests</dt><dd><span class="num">10</span> passing (capabilities, injection, path escape, timeout, crash resume, HIC, lab notebook)</dd></div>
+    </dl>
+    <div class="links">
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/tree/main/projects/09-gfdrr-sandboxed-drm-agent">Code and README</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/09-gfdrr-sandboxed-drm-agent/DESIGN_DECISIONS.md">Design decisions</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/09-gfdrr-sandboxed-drm-agent/docs/upskilling_roadmap/README.md">3-Tier Staff AI Playbook</a>
+      <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/09-gfdrr-sandboxed-drm-agent/docs/upskilling_roadmap/hands_on_governed_ai_lab.ipynb">Hands-on Lab (.ipynb)</a>
+    </div>
+  </aside>
+  <div class="body">
+    <ul class="findings">
+      <li><span class="stat">97.5%</span><p>5-part M&amp;E rubric coverage across 8 complex country briefs, up from 60.0% with single-pass RAG, by joining governed grant text with read-only geospatial exposure tables and systematic SADDD/FCV safeguard checks.</p></li>
+      <li><span class="stat">100%</span><p>unsupported-claim catch rate when the Critic Arbitrator verifies inline chunk tuples and HMAC provenance manifests before assembly—versus 0% catch rate in unarbitrated multi-agent drafting, at +$0.23 per 100 briefs.</p></li>
+      <li><span class="stat">0% leak</span><p>across adversarial tier-escalation (<span class="mono">Strictly Confidential</span>), prompt-injection override, <span class="mono">shell.exec</span> and <span class="mono">../</span> path-traversal red-team tests, with deterministic SQLite crash recovery resuming mid-run without duplicate upstream calls.</p></li>
+    </ul>
+
+    <figure>
+      <div class="svg-frame" role="img" aria-label="Orchestration diagram: Planner decomposes brief into three capability-scoped specialists (Grant M&amp;E Analyst, Geospatial Hazard Summarizer, Crosscutting Inclusion and FCV Reviewer), feeding Critic Arbitrator, Supervisor SQLite Checkpoint and Budget Cap, and Mandatory Human-in-Command Gate.">
+        <svg viewBox="0 0 980 235" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr-ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="currentColor"/>
+            </marker>
+          </defs>
+          <!-- Planner -->
+          <rect x="12" y="76" width="136" height="82" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+          <text x="20" y="95" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">NODE 01 · PLANNER</text>
+          <text x="20" y="113" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">Taxonomy Mapper</text>
+          <text x="20" y="129" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">4 Priorities · 10 Themes</text>
+          <text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">[taxonomy.map_subtasks]</text>
+
+          <!-- Fan-out lines -->
+          <path d="M 148 117 L 176 117 L 176 46 L 198 46" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+          <line x1="148" y1="117" x2="198" y2="117" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+          <path d="M 148 117 L 176 117 L 176 188 L 198 188" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+
+          <!-- 3 Scoped Specialists -->
+          <rect x="200" y="14" width="236" height="62" fill="var(--paper)" stroke="var(--water)" stroke-width="1.6"/>
+          <text x="208" y="31" font-family="Public Sans, sans-serif" font-size="10.8" font-weight="600" fill="currentColor">Grant M&amp;E Analyst</text>
+          <text x="208" y="46" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">ALLOW: rag.query ≤ Official Use Only</text>
+          <text x="208" y="61" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--contour)">DENY: Strictly Conf · shell · export</text>
+
+          <rect x="200" y="86" width="236" height="62" fill="var(--paper)" stroke="var(--water)" stroke-width="1.6"/>
+          <text x="208" y="103" font-family="Public Sans, sans-serif" font-size="10.8" font-weight="600" fill="currentColor">Geospatial Hazard Summarizer</text>
+          <text x="208" y="118" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">ALLOW: geo.compute_exposure (RO)</text>
+          <text x="208" y="133" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--contour)">DENY: rag.query · fs.write · "../"</text>
+
+          <rect x="200" y="158" width="236" height="62" fill="var(--paper)" stroke="var(--water)" stroke-width="1.6"/>
+          <text x="208" y="175" font-family="Public Sans, sans-serif" font-size="10.8" font-weight="600" fill="currentColor">Inclusion &amp; FCV Reviewer</text>
+          <text x="208" y="190" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">ALLOW: policy.audit_fcv_gender</text>
+          <text x="208" y="205" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Audits SADDD &amp; RF-2030-IND-08</text>
+
+          <!-- Fan-in lines -->
+          <path d="M 436 46 L 462 46 L 462 117 L 486 117" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+          <line x1="436" y1="117" x2="486" y2="117" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+          <path d="M 436 188 L 462 188 L 462 117 L 486 117" fill="none" stroke="currentColor" stroke-width="1.3" marker-end="url(#arr-ag)"/>
+
+          <!-- Critic -->
+          <rect x="488" y="72" width="152" height="90" fill="var(--paper)" stroke="var(--contour)" stroke-width="1.8"/>
+          <text x="496" y="91" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">NODE 05 · CRITIC</text>
+          <text x="496" y="109" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">Claim &amp; Hash Audit</text>
+          <text x="496" y="125" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Verifies HMAC receipts</text>
+          <text x="496" y="140" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Strips ungrounded text</text>
+          <text x="496" y="154" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">5-part M&amp;E rubric</text>
+
+          <line x1="640" y1="117" x2="662" y2="117" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-ag)"/>
+
+          <!-- Supervisor SQLite Checkpointer -->
+          <rect x="664" y="72" width="144" height="90" fill="var(--paper)" stroke="currentColor" stroke-width="1.5"/>
+          <text x="672" y="91" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--water)">SUPERVISOR</text>
+          <text x="672" y="109" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">SQLite Checkpoints</text>
+          <text x="672" y="125" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Token / USD / Step caps</text>
+          <text x="672" y="140" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Crash-safe state SHA256</text>
+          <text x="672" y="154" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">OTel JSON trace spans</text>
+
+          <line x1="808" y1="117" x2="830" y2="117" stroke="currentColor" stroke-width="1.4" marker-end="url(#arr-ag)"/>
+
+          <!-- Mandatory HIC Gate -->
+          <rect x="832" y="72" width="138" height="90" fill="var(--paper)" stroke="var(--contour)" stroke-width="2"/>
+          <text x="840" y="91" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="var(--contour)">MANDATORY HIC</text>
+          <text x="840" y="109" font-family="Public Sans, sans-serif" font-size="11" font-weight="600" fill="currentColor">Human Sign-Off</text>
+          <text x="840" y="125" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">Halts before release</text>
+          <text x="840" y="140" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--muted)">approve/revise/reject</text>
+          <text x="840" y="154" font-family="IBM Plex Mono, monospace" font-size="8.8" fill="var(--water)">HMAC-signed rationale</text>
+        </svg>
+      </div>
+      <figcaption>Capability-scoped orchestration. Every tool call passes SandboxedToolRunner allowlists, path jails and tier ceilings before execution.</figcaption>
+    </figure>
+
+    <figure>
+      <a class="img" href="projects/09-gfdrr-sandboxed-drm-agent/outputs/fig_agent_benchmark.png"><img src="assets/img/gfdrr-agent-benchmark.png" width="2493" height="946" alt="Benchmark chart comparing Single-Pass Governed RAG (60% rubric coverage), Multi-Agent without Critic (98% rubric, 0% unsupported-claim catch), and Full Sandboxed Multi-Agent + Critic + HIC (98% rubric, 100% catch) alongside token and cost overhead." loading="lazy"></a>
+      <figcaption>Empirical justification across 8 multi-country resilience briefs: quality/governance gain vs. token overhead</figcaption>
+    </figure>
+
+    <div class="table-wrap">
+      <table class="data">
+        <caption>Table 4. Single-pass RAG vs. multi-agent architectures across 8 complex country resilience briefs</caption>
+        <thead><tr><th>Architecture</th><th>5-part rubric</th><th>Unsupported-claim catch</th><th>FCV &amp; Gender audit</th><th>Security leak rate</th><th>HIC gate</th><th>Mean tokens</th><th>Est. cost / 100 briefs</th></tr></thead>
+        <tbody>
+          <tr><td>(1) Single-pass Governed RAG</td><td>60.0%</td><td class="neg">0.0%</td><td class="neg">0.0%</td><td>0.0%</td><td>No</td><td>414</td><td>$0.124</td></tr>
+          <tr><td>(2) Multi-agent (no Critic, no HIC)</td><td class="pos">97.5%</td><td class="neg">0.0%</td><td class="pos">100.0%</td><td>0.0%</td><td>No</td><td>1,475</td><td>$0.443</td></tr>
+          <tr><td>(3) Sandboxed Multi-Agent + Critic + HIC</td><td class="pos">97.5%</td><td class="pos">100.0%</td><td class="pos">100.0%</td><td class="pos">0.0%</td><td class="pos">Yes</td><td>2,242</td><td>$0.673</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Single-pass RAG uses 5.4× fewer tokens and remains the right default for direct grant lookups. Multi-agent orchestration earns its 1,828-token premium only when briefs must join grant text with tabular geospatial hazard exposure and enforce Critic arbitration before human release.</p>
+    </div>
+
+    <div class="explorer" aria-label="Interactive Multi-Agent Trace &amp; Security Audit Viewer">
+      <div class="exp-head">
+        <strong>Interactive Agent Trace, Red-Team Security Audit &amp; Crash-Recovery Viewer</strong>
+        <span>OpenTelemetry spans · SQLite checkpoint hashes · Signed HIC release record</span>
+      </div>
+      <div id="agent-explorer"><p class="exp-panel mono-sm">Loading verified multi-agent execution traces…</p></div>
+    </div>
+
+    <div>
+      <p class="line-label">Enterprise AI-Upskilling Playbook (<a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/09-gfdrr-sandboxed-drm-agent/docs/upskilling_roadmap/README.md">Staff Manual</a> · <a href="https://github.com/hanwar3/AI-Projects-and-Data-Analysis/blob/main/projects/09-gfdrr-sandboxed-drm-agent/docs/upskilling_roadmap/hands_on_governed_ai_lab.ipynb">Runnable Lab</a>)</p>
+      <div class="playbook-grid">
+        <div class="playbook-card">
+          <span class="track-no">Track 1 · Foundational</span>
+          <h4>DRM &amp; Communications Staff</h4>
+          <p>Prompt hygiene, WB AMS 6.21A 4-tier classification rules, avoiding Admin-2 beneficiary double-counting toward the 100M goal, and verifying <span class="mono">verify-provenance</span> receipts.</p>
+        </div>
+        <div class="playbook-card">
+          <span class="track-no">Track 2 · Applied</span>
+          <h4>M&amp;E &amp; Thematic Specialists</h4>
+          <p>Operating scoped hybrid RAG across 10 thematic areas, grading HITL chunk relevance (2/1/0), reading nDCG@5 and κ<sub>w</sub> scorecards, and signing HIC release rationales.</p>
+        </div>
+        <div class="playbook-card">
+          <span class="track-no">Track 3 · Technical</span>
+          <h4>Analytics &amp; Geospatial Leads</h4>
+          <p>Extending read-only country hazard exposure tools, configuring least-privilege agent manifests, and enforcing zero-leakage CI regression gates in pytest.</p>
+        </div>
+      </div>
+      <p class="note">Limits: SandboxedToolRunner enforces Python allowlists, read-only path containment and wall-clock timeouts in-process; permitting arbitrary user-authored raster/GeoPandas scripts in production requires OS-level microVM isolation (gVisor / Firecracker) with cgroup memory caps.</p>
+    </div>
+  </div>
+</article>
+
 <footer>
   <span>Haider Waseem Anwar · Urban and Regional Sciences, Texas A&amp;M University</span>
   <span class="mono">anwar_haider@tamu.edu</span>
 </footer>
 
 </div>
+<script src="assets/js/gfdrr-showcase.js" defer></script>
 </body>
 </html>

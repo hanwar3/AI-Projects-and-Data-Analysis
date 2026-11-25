@@ -1,0 +1,4 @@
+architecture,n_scenarios,rubric_coverage_pct,unsupported_claim_catch_rate_pct,crosscutting_gap_detection_pct,security_violation_leak_rate_pct,hic_gate_enforced,mean_latency_ms,mean_tokens,cost_per_100_briefs_usd
+(1) Single-Pass Governed RAG,8,60.0,0.0,0.0,0.0,False,16.29,414,0.124
+"(2) Multi-Agent (No Critic, No HIC)",8,97.5,0.0,100.0,0.0,False,29.96,1475,0.443
+(3) Sandboxed Multi-Agent + Critic + HIC,8,97.5,100.0,100.0,0.0,True,35.41,2242,0.673

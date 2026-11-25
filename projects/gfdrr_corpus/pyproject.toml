@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gfdrr-corpus"
+version = "0.1.0"
+description = "Synthetic/public-domain GFDRR 2026-2030 DRM & M&E Grant Corpus with WB classification tiers and PII redaction test traps"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["gfdrr_corpus*"]

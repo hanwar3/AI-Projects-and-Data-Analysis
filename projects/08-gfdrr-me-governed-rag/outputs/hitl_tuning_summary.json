@@ -1,0 +1,60 @@
+{
+  "n_queries_evaluated": 26,
+  "n_chunk_judgments": 208,
+  "untuned_ndcg_at_5": 0.8237,
+  "tuned_ndcg_at_5": 0.9105,
+  "delta_ndcg_at_5": 0.0867,
+  "ndcg_ci95": [
+    0.0385,
+    0.1449
+  ],
+  "ndcg_bootstrap_p": 0.001,
+  "untuned_mrr": 0.9423,
+  "tuned_mrr": 0.9615,
+  "delta_mrr": 0.0192,
+  "mrr_ci95": [
+    -0.0385,
+    0.0769
+  ],
+  "untuned_recall_at_5": 0.7808,
+  "tuned_recall_at_5": 0.9263,
+  "cohen_kappa_unweighted": 0.2724,
+  "cohen_kappa_quadratic": 0.4593,
+  "judge_confusion_matrix_3x3": [
+    [
+      51,
+      63,
+      28
+    ],
+    [
+      1,
+      5,
+      9
+    ],
+    [
+      0,
+      6,
+      45
+    ]
+  ],
+  "untuned_weights": {
+    "w_bm25": 1.0,
+    "w_dense": 0.0,
+    "rrf_k": 60,
+    "rerank_rrf_w": 0.5,
+    "rerank_lexical_w": 0.5,
+    "rerank_semantic_w": 0.0,
+    "rerank_section_w": 0.0,
+    "rerank_metadata_w": 0.0
+  },
+  "production_tuned_weights": {
+    "w_bm25": 1.0,
+    "w_dense": 0.95,
+    "rrf_k": 40,
+    "rerank_rrf_w": 0.3,
+    "rerank_lexical_w": 0.36,
+    "rerank_semantic_w": 0.3,
+    "rerank_section_w": 0.09,
+    "rerank_metadata_w": 0.1
+  }
+}

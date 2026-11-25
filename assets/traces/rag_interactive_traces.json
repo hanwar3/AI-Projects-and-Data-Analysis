@@ -1,0 +1,908 @@
+{
+  "generated_by": "projects/08-gfdrr-me-governed-rag/scripts/run_benchmarks_and_export.py",
+  "ablation_summary": [
+    {
+      "config_label": "(A) Dense-only (SVD Semantic)",
+      "retrieval_mode": "dense_only",
+      "recall_at_5": 0.8256,
+      "mrr": 0.9519,
+      "ndcg_at_5": 0.852,
+      "citation_precision": 1.0,
+      "abstention_f1": 1.0,
+      "pii_redaction_recall": 1.0,
+      "classification_compliance_rate": 1.0,
+      "p95_latency_ms": 6.75,
+      "mean_latency_ms": 5.37
+    },
+    {
+      "config_label": "(B) BM25-only (Lexical)",
+      "retrieval_mode": "bm25_only",
+      "recall_at_5": 0.7827,
+      "mrr": 0.9551,
+      "ndcg_at_5": 0.8319,
+      "citation_precision": 1.0,
+      "abstention_f1": 1.0,
+      "pii_redaction_recall": 1.0,
+      "classification_compliance_rate": 1.0,
+      "p95_latency_ms": 7.13,
+      "mean_latency_ms": 5.67
+    },
+    {
+      "config_label": "(C) Hybrid RRF (Unweighted)",
+      "retrieval_mode": "hybrid_rrf",
+      "recall_at_5": 0.7808,
+      "mrr": 0.9423,
+      "ndcg_at_5": 0.8237,
+      "citation_precision": 1.0,
+      "abstention_f1": 1.0,
+      "pii_redaction_recall": 1.0,
+      "classification_compliance_rate": 1.0,
+      "p95_latency_ms": 7.13,
+      "mean_latency_ms": 5.86
+    },
+    {
+      "config_label": "(D) Hybrid RRF + Reranker + Metadata Filter",
+      "retrieval_mode": "hybrid_rrf_rerank",
+      "recall_at_5": 0.9186,
+      "mrr": 0.9615,
+      "ndcg_at_5": 0.9065,
+      "citation_precision": 1.0,
+      "abstention_f1": 1.0,
+      "pii_redaction_recall": 1.0,
+      "classification_compliance_rate": 1.0,
+      "p95_latency_ms": 12.22,
+      "mean_latency_ms": 6.43
+    },
+    {
+      "config_label": "(E) Hybrid RRF + Reranker + Filter (HITL-Tuned)",
+      "retrieval_mode": "hybrid_rrf_rerank",
+      "recall_at_5": 0.9263,
+      "mrr": 0.9615,
+      "ndcg_at_5": 0.9105,
+      "citation_precision": 1.0,
+      "abstention_f1": 1.0,
+      "pii_redaction_recall": 1.0,
+      "classification_compliance_rate": 1.0,
+      "p95_latency_ms": 12.29,
+      "mean_latency_ms": 6.48
+    }
+  ],
+  "hitl_summary": {
+    "n_queries_evaluated": 26,
+    "n_chunk_judgments": 208,
+    "untuned_ndcg_at_5": 0.8237,
+    "tuned_ndcg_at_5": 0.9105,
+    "delta_ndcg_at_5": 0.0867,
+    "ndcg_ci95": [
+      0.0385,
+      0.1449
+    ],
+    "ndcg_bootstrap_p": 0.001,
+    "untuned_mrr": 0.9423,
+    "tuned_mrr": 0.9615,
+    "delta_mrr": 0.0192,
+    "mrr_ci95": [
+      -0.0385,
+      0.0769
+    ],
+    "untuned_recall_at_5": 0.7808,
+    "tuned_recall_at_5": 0.9263,
+    "cohen_kappa_unweighted": 0.2724,
+    "cohen_kappa_quadratic": 0.4593,
+    "judge_confusion_matrix_3x3": [
+      [
+        51,
+        63,
+        28
+      ],
+      [
+        1,
+        5,
+        9
+      ],
+      [
+        0,
+        6,
+        45
+      ]
+    ],
+    "untuned_weights": {
+      "w_bm25": 1.0,
+      "w_dense": 0.0,
+      "rrf_k": 60,
+      "rerank_rrf_w": 0.5,
+      "rerank_lexical_w": 0.5,
+      "rerank_semantic_w": 0.0,
+      "rerank_section_w": 0.0,
+      "rerank_metadata_w": 0.0
+    },
+    "production_tuned_weights": {
+      "w_bm25": 1.0,
+      "w_dense": 0.95,
+      "rrf_k": 40,
+      "rerank_rrf_w": 0.3,
+      "rerank_lexical_w": 0.36,
+      "rerank_semantic_w": 0.3,
+      "rerank_section_w": 0.09,
+      "rerank_metadata_w": 0.1
+    }
+  },
+  "traces": [
+    {
+      "trace_id": "rag-case-01-nbs",
+      "short_label": "1. Multi-Grant NbS Synthesis",
+      "badge": "ALLOWED \u00b7 3 Grants Cited",
+      "query": "Compare Nature-based Solutions flood attenuation and World Bank financing informed across Pakistan, Viet Nam, and Kenya.",
+      "clearance_role": "me_specialist",
+      "classification_verdict": {
+        "decision": "ALLOWED",
+        "clearance_role": "me_specialist",
+        "max_allowed_tier": "Confidential",
+        "total_corpus_chunks": 88,
+        "authorized_chunk_count": 76,
+        "blocked_chunk_count": 12,
+        "targeted_blocked_doc_ids": [],
+        "targeted_blocked_tiers": [],
+        "audit_event_id": null,
+        "reason": "Role 'me_specialist' authorized up to 'Confidential' (76/88 corpus chunks eligible)."
+      },
+      "abstained": false,
+      "abstention_reason": null,
+      "max_confidence": 0.8737,
+      "latency_ms": 8.036,
+      "checkpoint_redaction_counts": {
+        "checkpoint_a_retrieved_chunks": 0,
+        "checkpoint_b_citation_snippets": 0,
+        "checkpoint_c_generated_output": 0
+      },
+      "total_pii_redactions": 0,
+      "zero_pii_leakage_verified": true,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "DOC-GFDRR-001::S2.0",
+          "doc_id": "DOC-GFDRR-001",
+          "grant_id": "GFDRR-PK-2026-001",
+          "country": "Pakistan",
+          "thematic_area": "Nature-based Solutions for Climate Resilience",
+          "wb_classification": "Public",
+          "section_id": "S2.0",
+          "section_title": "Grant Intervention & World Bank Financing Informed",
+          "page_ref": "p.4-6",
+          "bm25_score": 26.1355,
+          "dense_score": 0.7709,
+          "rrf_score": 0.04756,
+          "rerank_score": 0.8737,
+          "redacted_text": "Grant GFDRR-PK-2026-001 ($1.85M) deployed the GFDRR Nature-Based Solutions Opportunity Scan coupled with 2D hydrodynamic modelling over 30-meter terrain grids. The analytics directly informed $410.0M in IBRD/IDA financing under the Resilient Sindh Integrated Flood Management Project, reallocating 28% of grey canal-lining capital toward 14,500 hectares of seasonal floodplain retention wetlands and native tamarix riparian buffers.",
+          "chunk_sha256": "292a2e37307db148f306094676793f9dab70706d5eeb7deb2d7a31f390d0f83a"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-004::S2.0",
+          "doc_id": "DOC-GFDRR-004",
+          "grant_id": "GFDRR-VN-2026-003",
+          "country": "Viet Nam",
+          "thematic_area": "Nature-based Solutions for Climate Resilience",
+          "wb_classification": "Public",
+          "section_id": "S2.0",
+          "section_title": "Hybrid Green-Grey Design & Investment Pipeline",
+          "page_ref": "p.4-6",
+          "bm25_score": 13.0675,
+          "dense_score": 0.6184,
+          "rrf_score": 0.0459,
+          "rerank_score": 0.6918,
+          "redacted_text": "Grant GFDRR-VN-2026-003 ($1.40M) quantified wave-height attenuation of 55% to 72% across 250-meter Avicennia-Rhizophora mangrove belts paired with porous sediment-trapping fences, reducing concrete revetment toe-scour maintenance costs by 39% across a $315.0M World Bank coastal resilience lending operation.",
+          "chunk_sha256": "2b7ec4275de4d81691e995712b5b861e5a46567f6d4a7a2048183b5eced45f22"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-021::S2.0",
+          "doc_id": "DOC-GFDRR-021",
+          "grant_id": "GFDRR-KEN-2027-021",
+          "country": "Kenya",
+          "thematic_area": "Nature-based Solutions for Climate Resilience",
+          "wb_classification": "Confidential",
+          "section_id": "S2.0",
+          "section_title": "Green Drainage & Transport Corridor Bio-Engineering",
+          "page_ref": "p.3-5",
+          "bm25_score": 10.6435,
+          "dense_score": 0.6389,
+          "rrf_score": 0.04587,
+          "rerank_score": 0.6717,
+          "redacted_text": "Grant GFDRR-KEN-2027-021 ($1.55M) designed vegetated bioswales, constructed riparian wetlands, and vetiver road-cut stabilization, informing $260.0M in World Bank Urban Mobility & Flood Resilience financing.",
+          "chunk_sha256": "7b7d85016ce5afd46c2918d821e15f6611f39697cfc5f770015c4996d56ac107"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-021::S3.0",
+          "doc_id": "DOC-GFDRR-021",
+          "grant_id": "GFDRR-KEN-2027-021",
+          "country": "Kenya",
+          "thematic_area": "Nature-based Solutions for Climate Resilience",
+          "wb_classification": "Confidential",
+          "section_id": "S3.0",
+          "section_title": "M&E Peak Attenuation & Beneficiary Reach",
+          "page_ref": "p.6-7",
+          "bm25_score": 7.8105,
+          "dense_score": 0.4728,
+          "rrf_score": 0.04384,
+          "rerank_score": 0.5734,
+          "redacted_text": "Sub-catchment peak discharge fell by 27% in instrumented pilot reaches, protecting 3,400,000 urban commuters and riparian residents (RF-2030-IND-02).",
+          "chunk_sha256": "8f9be973d45b304816b808e8f280055e700783ad672afc865dfd0b337045d83e"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-001::S3.0",
+          "doc_id": "DOC-GFDRR-001",
+          "grant_id": "GFDRR-PK-2026-001",
+          "country": "Pakistan",
+          "thematic_area": "Nature-based Solutions for Climate Resilience",
+          "wb_classification": "Public",
+          "section_id": "S3.0",
+          "section_title": "M&E Results Framework & 2026-2030 Indicators",
+          "page_ref": "p.7-9",
+          "bm25_score": 6.01,
+          "dense_score": 0.4568,
+          "rrf_score": 0.04193,
+          "rerank_score": 0.5615,
+          "redacted_text": "Under GFDRR Results Framework indicator RF-2030-IND-02 (people with reduced flood risk from risk-informed investments), the combined grey-green embankment setback package targets 6,400,000 beneficiaries by FY2029, reducing modelled 25-year agricultural inundation duration from 49 days to 18 days. Benefit-cost ratio (BCR) across three wetland corridors was estimated at 3.4x under RCP4.5 monsoon intensification.",
+          "chunk_sha256": "27087400f821e66e80ff0ab9804bef8a2bb25ff17e62179dabbe5f701ca25aa8"
+        }
+      ],
+      "redaction_diffs": [],
+      "answer_text": "Grounded synthesis across 4 verified GFDRR M&E evidence section(s):\n- **Pakistan \u2014 GFDRR-PK-2026-001 (Grant Intervention & World Bank Financing Informed):** Grant GFDRR-PK-2026-001 ($1.85M) deployed the GFDRR Nature-Based Solutions Opportunity Scan coupled with 2D hydrodynamic modelling over 30-meter terrain grids. The analytics directly informed $410.0M in IBRD/IDA financing under the Resilient Sindh Integrated Flood Management Project, reallocating 28% of grey canal-lining capital toward 14,500 hectares of seasonal floodplain retention wetlands and native tamarix riparian buffers. [DOC-GFDRR-001 \u00a7S2.0, p.4-6]\n- **Viet Nam \u2014 GFDRR-VN-2026-003 (Hybrid Green-Grey Design & Investment Pipeline):** Grant GFDRR-VN-2026-003 ($1.40M) quantified wave-height attenuation of 55% to 72% across 250-meter Avicennia-Rhizophora mangrove belts paired with porous sediment-trapping fences, reducing concrete revetment toe-scour maintenance costs by 39% across a $315.0M World Bank coastal resilience lending operation. [DOC-GFDRR-004 \u00a7S2.0, p.4-6]\n- **Kenya \u2014 GFDRR-KEN-2027-021 (Green Drainage & Transport Corridor Bio-Engineering):** Grant GFDRR-KEN-2027-021 ($1.55M) designed vegetated bioswales, constructed riparian wetlands, and vetiver road-cut stabilization, informing $260.0M in World Bank Urban Mobility & Flood Resilience financing. [DOC-GFDRR-021 \u00a7S2.0, p.3-5]\n- **Kenya \u2014 GFDRR-KEN-2027-021 (M&E Peak Attenuation & Beneficiary Reach):** Sub-catchment peak discharge fell by 27% in instrumented pilot reaches, protecting 3,400,000 urban commuters and riparian residents (RF-2030-IND-02). [DOC-GFDRR-021 \u00a7S3.0, p.6-7]",
+      "citation_precision": 1.0,
+      "provenance": {
+        "manifest_id": "PROV-01BDD598FD9E",
+        "utc_timestamp": "2026-11-25T18:57:41Z",
+        "model_version": "gfdrr-governed-rag-v1.2-local",
+        "clearance_role": "me_specialist",
+        "max_classification_used": "Confidential",
+        "abstained": false,
+        "query_sha256": "f346607d77f6d2252500fc2800c2a06b9c3fc55e2e75a196018f5da3f8d16251",
+        "answer_sha256": "e4312662bca63afa1496d00f0312bc88acd0645a8a0c27cda77f5413920c95ad",
+        "total_pii_redactions": 0,
+        "redactions_by_checkpoint": {
+          "checkpoint_a_retrieved_chunks": 0,
+          "checkpoint_b_citation_snippets": 0,
+          "checkpoint_c_generated_output": 0
+        },
+        "cited_chunks": [
+          {
+            "chunk_id": "DOC-GFDRR-001::S2.0",
+            "doc_id": "DOC-GFDRR-001",
+            "grant_id": "GFDRR-PK-2026-001",
+            "section_id": "S2.0",
+            "page_ref": "p.4-6",
+            "wb_classification": "Public",
+            "doc_sha256": "3c37a6c181ed00d125c41e046c0fdec411551deb9e651ccd6ba9b9004c2c69c9",
+            "chunk_sha256": "292a2e37307db148f306094676793f9dab70706d5eeb7deb2d7a31f390d0f83a"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-004::S2.0",
+            "doc_id": "DOC-GFDRR-004",
+            "grant_id": "GFDRR-VN-2026-003",
+            "section_id": "S2.0",
+            "page_ref": "p.4-6",
+            "wb_classification": "Public",
+            "doc_sha256": "c2ac42d92a19e1f2f1fe20fc101bf99c93c36f3ee5bd3735f32f943fd9813b0a",
+            "chunk_sha256": "2b7ec4275de4d81691e995712b5b861e5a46567f6d4a7a2048183b5eced45f22"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-021::S2.0",
+            "doc_id": "DOC-GFDRR-021",
+            "grant_id": "GFDRR-KEN-2027-021",
+            "section_id": "S2.0",
+            "page_ref": "p.3-5",
+            "wb_classification": "Confidential",
+            "doc_sha256": "711bfc7e40fdb988918047d2227e024c055d310927ba8a186bd904670c08113c",
+            "chunk_sha256": "7b7d85016ce5afd46c2918d821e15f6611f39697cfc5f770015c4996d56ac107"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-021::S3.0",
+            "doc_id": "DOC-GFDRR-021",
+            "grant_id": "GFDRR-KEN-2027-021",
+            "section_id": "S3.0",
+            "page_ref": "p.6-7",
+            "wb_classification": "Confidential",
+            "doc_sha256": "711bfc7e40fdb988918047d2227e024c055d310927ba8a186bd904670c08113c",
+            "chunk_sha256": "8f9be973d45b304816b808e8f280055e700783ad672afc865dfd0b337045d83e"
+          }
+        ],
+        "hmac_sha256": "37d0fb9621795e29b342a7d731564c464fa91f2afc4eaf0a34d11f9fd9c92379"
+      },
+      "verification": {
+        "verified": true,
+        "status": "VERIFIED",
+        "manifest_id": "PROV-01BDD598FD9E",
+        "hmac_valid": true,
+        "body_hash_valid": true,
+        "watermark_valid": true,
+        "reason": "Cryptographic HMAC-SHA256 signature and answer SHA-256 digest match."
+      }
+    },
+    {
+      "trace_id": "rag-case-02-pii",
+      "short_label": "2. 3-Layer PII Redaction Trap",
+      "badge": "6 PII Spans Masked \u00b7 0% Leak",
+      "query": "Report the Dadu Sindh field spot-check mortar strength result and grievance closure details under grant GFDRR-PK-2026-004.",
+      "clearance_role": "me_specialist",
+      "classification_verdict": {
+        "decision": "ALLOWED",
+        "clearance_role": "me_specialist",
+        "max_allowed_tier": "Confidential",
+        "total_corpus_chunks": 88,
+        "authorized_chunk_count": 76,
+        "blocked_chunk_count": 12,
+        "targeted_blocked_doc_ids": [],
+        "targeted_blocked_tiers": [],
+        "audit_event_id": null,
+        "reason": "Role 'me_specialist' authorized up to 'Confidential' (76/88 corpus chunks eligible)."
+      },
+      "abstained": false,
+      "abstention_reason": null,
+      "max_confidence": 0.8979,
+      "latency_ms": 6.834,
+      "checkpoint_redaction_counts": {
+        "checkpoint_a_retrieved_chunks": 11,
+        "checkpoint_b_citation_snippets": 8,
+        "checkpoint_c_generated_output": 0
+      },
+      "total_pii_redactions": 19,
+      "zero_pii_leakage_verified": true,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "DOC-GFDRR-002::S4.0",
+          "doc_id": "DOC-GFDRR-002",
+          "grant_id": "GFDRR-PK-2026-004",
+          "country": "Pakistan",
+          "thematic_area": "Building Regulation for Resilience - Resilient Housing",
+          "wb_classification": "Confidential",
+          "section_id": "S4.0",
+          "section_title": "Field Verification Spot-Check & Grievance Escalation Log",
+          "page_ref": "p.9-11",
+          "bm25_score": 33.5658,
+          "dense_score": 0.9687,
+          "rrf_score": 0.04756,
+          "rerank_score": 0.8979,
+          "redacted_text": "Field spot-check conducted by Senior Verification Engineer [REDACTED_PERSON] (contact: [REDACTED_EMAIL], mobile [REDACTED_PHONE]) reviewed contested lintel-band remediation for claimant household [REDACTED_ID] residing at [REDACTED_ADDRESS]. Mortar cube strength met 4.8 MPa threshold after re-inspection; grievance ticket [REDACTED_ID] closed with second tranche release approved under FCV border-district security escort.",
+          "chunk_sha256": "3b882f12849a820e6907c8346ceab338fd6428be4aa2a3de6794def197e46107"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-019::S4.0",
+          "doc_id": "DOC-GFDRR-019",
+          "grant_id": "GFDRR-PK-2027-019",
+          "country": "Pakistan",
+          "thematic_area": "City Resilience - Urban Heat Resilience",
+          "wb_classification": "Official Use Only",
+          "section_id": "S4.0",
+          "section_title": "Household Sensor Survey & Enumerator Log",
+          "page_ref": "p.8-9",
+          "bm25_score": 2.3178,
+          "dense_score": 0.4002,
+          "rrf_score": 0.04303,
+          "rerank_score": 0.4552,
+          "redacted_text": "Indoor logger calibration was supervised by Field Survey Lead [REDACTED_PERSON] ([REDACTED_EMAIL], mobile [REDACTED_PHONE]) at host household [REDACTED_ID], [REDACTED_ADDRESS]. Women-only shaded cooling rooms tripled female daytime utilization compared to mixed halls.",
+          "chunk_sha256": "0addb91282ee87cdd512a26760ddd1d1d48e1bbd3d28476bec9cb17a43722ed2"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-002::S3.0",
+          "doc_id": "DOC-GFDRR-002",
+          "grant_id": "GFDRR-PK-2026-004",
+          "country": "Pakistan",
+          "thematic_area": "Building Regulation for Resilience - Resilient Housing",
+          "wb_classification": "Confidential",
+          "section_id": "S3.0",
+          "section_title": "M&E Results & Joint Land-Title Indicators",
+          "page_ref": "p.7-8",
+          "bm25_score": 5.5408,
+          "dense_score": 0.1382,
+          "rrf_score": 0.04446,
+          "rerank_score": 0.4407,
+          "redacted_text": "Tracked under RF-2030-IND-03 (resilient housing units meeting multi-hazard code), 560,000 core units are verified on schedule, protecting 3,900,000 household members. Crucially, 71.2% of newly issued occupancy and reconstruction bank accounts were registered in women's names or joint spousal title.",
+          "chunk_sha256": "7f127e5013cfaa80feb6ec79e52861000818b20a10758a83a3108a3bf7f858f9"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-002::S2.0",
+          "doc_id": "DOC-GFDRR-002",
+          "grant_id": "GFDRR-PK-2026-004",
+          "country": "Pakistan",
+          "thematic_area": "Building Regulation for Resilience - Resilient Housing",
+          "wb_classification": "Confidential",
+          "section_id": "S2.0",
+          "section_title": "Tranche Inspection & Financing Leverage",
+          "page_ref": "p.4-6",
+          "bm25_score": 2.9699,
+          "dense_score": 0.2001,
+          "rrf_score": 0.04337,
+          "rerank_score": 0.4281,
+          "redacted_text": "Geotagged mobile inspection protocols informed tranche disbursement rules across $500.0M of IDA reconstruction co-financing. Plinth-level pass rates rose from 62.4% in Q1 FY2026 to 91.8% in Q3 FY2026 following deployment of vernacular pictorial mason guides.",
+          "chunk_sha256": "53377892d76eb3ad1cfe92961750f280be9e8fbbfec55f037f2cfef2c17a0e00"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-019::S2.0",
+          "doc_id": "DOC-GFDRR-019",
+          "grant_id": "GFDRR-PK-2027-019",
+          "country": "Pakistan",
+          "thematic_area": "City Resilience - Urban Heat Resilience",
+          "wb_classification": "Official Use Only",
+          "section_id": "S2.0",
+          "section_title": "Reflective Cool Roofs & Solar Cooling Hubs",
+          "page_ref": "p.3-5",
+          "bm25_score": 4.5102,
+          "dense_score": 0.1936,
+          "rrf_score": 0.04432,
+          "rerank_score": 0.4212,
+          "redacted_text": "Grant GFDRR-PK-2027-019 ($1.45M) evaluated low-cost elastomeric and lime-pozzolana cool coatings alongside 65 solar-backed community cooling centers, informing $210.0M in Sindh Liveable Cities World Bank financing.",
+          "chunk_sha256": "684f6a26e14063f147d3201891d967db387616b85a265c40e415e9ced0e78ed8"
+        }
+      ],
+      "redaction_diffs": [
+        {
+          "chunk_id": "DOC-GFDRR-002::S4.0",
+          "checkpoint_a_count": 6,
+          "checkpoint_b_count": 3,
+          "pii_types": [
+            "ADDRESS",
+            "EMAIL",
+            "ID",
+            "PERSON",
+            "PHONE"
+          ],
+          "redacted_text": "Field spot-check conducted by Senior Verification Engineer [REDACTED_PERSON] (contact: [REDACTED_EMAIL], mobile [REDACTED_PHONE]) reviewed contested lintel-band remediation for claimant household [REDACTED_ID] residing at [REDACTED_ADDRESS]. Mortar cube strength met 4.8 MPa threshold after re-inspection; grievance ticket [REDACTED_ID] closed with second tranche release approved under FCV border-district security escort.",
+          "redacted_snippet": "Sindh & Balochistan Owner-Driven Resilient Housing Verification & Field M&E Audit (GFDRR-PK-2026-004, p.9-11): Field spot-check conducted by Senior Verification Engineer [REDACTED_PERSON] (contact: [REDACTED_EMAIL], mobile [REDACTED_PHONE]) reviewed contested lintel-band remediation for claimant household CNIC 42101...",
+          "synthetic_demo_before_text": "Field spot-check conducted by Senior Verification Engineer Tariq Mahmood Baloch (contact: t.baloch.field@gfdrr-sim.org, mobile +92-300-5584921) reviewed contested lintel-band remediation for claimant household CNIC 42101-7834912-3 residing at House 14-B, Street 7, Satellite Town, Dadu, Sindh. Mortar cube strength met 4.8 MPa threshold after re-inspection; grievance ticket BEN-ID-PK-2026-44109 closed with second tranche release approved under FCV border-district security escort."
+        },
+        {
+          "chunk_id": "DOC-GFDRR-019::S4.0",
+          "checkpoint_a_count": 5,
+          "checkpoint_b_count": 5,
+          "pii_types": [
+            "ADDRESS",
+            "EMAIL",
+            "ID",
+            "PERSON",
+            "PHONE"
+          ],
+          "redacted_text": "Indoor logger calibration was supervised by Field Survey Lead [REDACTED_PERSON] ([REDACTED_EMAIL], mobile [REDACTED_PHONE]) at host household [REDACTED_ID], [REDACTED_ADDRESS]. Women-only shaded cooling rooms tripled female daytime utilization compared to mixed halls.",
+          "redacted_snippet": "Pakistan Karachi & Jacobabad Extreme Urban Heat & Cooling Shelter Evaluation (GFDRR-PK-2027-019, p.8-9): Indoor logger calibration was supervised by Field Survey Lead [REDACTED_PERSON] ([REDACTED_EMAIL], mobile [REDACTED_PHONE]) at host household [REDACTED_ID], [REDACTED_ADDRESS]. Wo...",
+          "synthetic_demo_before_text": "Indoor logger calibration was supervised by Field Survey Lead Farzana Bibi (farzana.bibi@heat-survey-sim.pk, mobile +92-333-8190427) at host household CNIC 42201-6193840-8, Flat 304, Block 9, Gulshan-e-Iqbal, Karachi. Women-only shaded cooling rooms tripled female daytime utilization compared to mixed halls."
+        }
+      ],
+      "answer_text": "Grounded synthesis across 1 verified GFDRR M&E evidence section(s):\n- **Pakistan \u2014 GFDRR-PK-2026-004 (Field Verification Spot-Check & Grievance Escalation Log):** Field spot-check conducted by Senior Verification Engineer [REDACTED_PERSON] (contact: [REDACTED_EMAIL], mobile [REDACTED_PHONE]) reviewed contested lintel-band remediation for claimant household [REDACTED_ID] residing at [REDACTED_ADDRESS]. Mortar cube strength met 4.8 MPa threshold after re-inspection; grievance ticket [REDACTED_ID] closed with second tranche release approved under FCV border-district security escort. [DOC-GFDRR-002 \u00a7S4.0, p.9-11]",
+      "citation_precision": 1.0,
+      "provenance": {
+        "manifest_id": "PROV-237206A9C42D",
+        "utc_timestamp": "2026-11-25T18:57:41Z",
+        "model_version": "gfdrr-governed-rag-v1.2-local",
+        "clearance_role": "me_specialist",
+        "max_classification_used": "Confidential",
+        "abstained": false,
+        "query_sha256": "59c13d1a7d1d366814ef7af9c848221d5c280eb793f997fcbbcfd7eb0e1fa176",
+        "answer_sha256": "b282edf58f9c961d277627099ee679c69c26cd304fd4528a43ae0bb14f260e79",
+        "total_pii_redactions": 19,
+        "redactions_by_checkpoint": {
+          "checkpoint_a_retrieved_chunks": 11,
+          "checkpoint_b_citation_snippets": 8,
+          "checkpoint_c_generated_output": 0
+        },
+        "cited_chunks": [
+          {
+            "chunk_id": "DOC-GFDRR-002::S4.0",
+            "doc_id": "DOC-GFDRR-002",
+            "grant_id": "GFDRR-PK-2026-004",
+            "section_id": "S4.0",
+            "page_ref": "p.9-11",
+            "wb_classification": "Confidential",
+            "doc_sha256": "6e716d02f0440719a19e85e142efe8c5144aa607babd5314290de5955d578bbf",
+            "chunk_sha256": "3b882f12849a820e6907c8346ceab338fd6428be4aa2a3de6794def197e46107"
+          }
+        ],
+        "hmac_sha256": "85bd5327902645afbe6104091c6da023c3b8748928131246c008f04eda403255"
+      },
+      "verification": {
+        "verified": true,
+        "status": "VERIFIED",
+        "manifest_id": "PROV-237206A9C42D",
+        "hmac_valid": true,
+        "body_hash_valid": true,
+        "watermark_valid": true,
+        "reason": "Cryptographic HMAC-SHA256 signature and answer SHA-256 digest match."
+      }
+    },
+    {
+      "trace_id": "rag-case-03-blocked",
+      "short_label": "3. WB Classification Gate Block",
+      "badge": "BLOCKED \u00b7 AMS 6.21A Audit Logged",
+      "query": "Disclose the confidential Belize Cat DDO parametric wind-knot threshold and sovereign liquidity terms in GFDRR-BZ-2026-005.",
+      "clearance_role": "public_external",
+      "classification_verdict": {
+        "decision": "BLOCKED_CLASSIFICATION",
+        "clearance_role": "public_external",
+        "max_allowed_tier": "Public",
+        "total_corpus_chunks": 88,
+        "authorized_chunk_count": 0,
+        "blocked_chunk_count": 52,
+        "targeted_blocked_doc_ids": [
+          "DOC-GFDRR-005"
+        ],
+        "targeted_blocked_tiers": [
+          "Confidential"
+        ],
+        "audit_event_id": 28,
+        "reason": "Access denied under World Bank AMS 6.21A: role 'public_external' (max tier 'Public') cannot retrieve Confidential records (DOC-GFDRR-005)."
+      },
+      "abstained": true,
+      "abstention_reason": "Access denied under World Bank AMS 6.21A: role 'public_external' (max tier 'Public') cannot retrieve Confidential records (DOC-GFDRR-005).",
+      "max_confidence": 0.0,
+      "latency_ms": 0.473,
+      "checkpoint_redaction_counts": {
+        "checkpoint_a_retrieved_chunks": 0,
+        "checkpoint_b_citation_snippets": 0,
+        "checkpoint_c_generated_output": 0
+      },
+      "total_pii_redactions": 0,
+      "zero_pii_leakage_verified": true,
+      "retrieved_chunks": [],
+      "redaction_diffs": [],
+      "answer_text": "ABSTAINED (WB AMS 6.21A Classification Policy Gate): Request cannot be fulfilled under clearance role 'public_external' (authorized up to 'Public'). Access denied under World Bank AMS 6.21A: role 'public_external' (max tier 'Public') cannot retrieve Confidential records (DOC-GFDRR-005). This access attempt has been recorded in the immutable classification audit log.",
+      "citation_precision": 1.0,
+      "provenance": {
+        "manifest_id": "PROV-A8AE738FD23C",
+        "utc_timestamp": "2026-11-25T18:57:41Z",
+        "model_version": "gfdrr-governed-rag-v1.2-local",
+        "clearance_role": "public_external",
+        "max_classification_used": "NONE (BLOCKED)",
+        "abstained": true,
+        "query_sha256": "b13e59326106815e2ea48f316888124283d8facfa5c17f0a33c9d3c3f9fd0508",
+        "answer_sha256": "f637e424515e4100b1aad6e896d14fed6938f9f469bf5795f243c35887ed3481",
+        "total_pii_redactions": 0,
+        "redactions_by_checkpoint": {
+          "checkpoint_a_retrieved_chunks": 0,
+          "checkpoint_b_citation_snippets": 0,
+          "checkpoint_c_generated_output": 0
+        },
+        "cited_chunks": [],
+        "hmac_sha256": "c1af2d4b3b87b5e3df838c0957066463fad9bf039444338fe38403e49e523a18"
+      },
+      "verification": {
+        "verified": true,
+        "status": "VERIFIED",
+        "manifest_id": "PROV-A8AE738FD23C",
+        "hmac_valid": true,
+        "body_hash_valid": true,
+        "watermark_valid": true,
+        "reason": "Cryptographic HMAC-SHA256 signature and answer SHA-256 digest match."
+      }
+    },
+    {
+      "trace_id": "rag-case-04-fcv-gender",
+      "short_label": "4. FCV & Gender EWS Verification",
+      "badge": "Official Use \u00b7 PII Masked",
+      "query": "How are women's radio warning relays and solar handsets verified in Mopti under Mali Hydromet grant GFDRR-ML-2026-006?",
+      "clearance_role": "wbg_analyst",
+      "classification_verdict": {
+        "decision": "ALLOWED",
+        "clearance_role": "wbg_analyst",
+        "max_allowed_tier": "Official Use Only",
+        "total_corpus_chunks": 88,
+        "authorized_chunk_count": 64,
+        "blocked_chunk_count": 24,
+        "targeted_blocked_doc_ids": [],
+        "targeted_blocked_tiers": [],
+        "audit_event_id": null,
+        "reason": "Role 'wbg_analyst' authorized up to 'Official Use Only' (64/88 corpus chunks eligible)."
+      },
+      "abstained": false,
+      "abstention_reason": null,
+      "max_confidence": 0.9464,
+      "latency_ms": 5.836,
+      "checkpoint_redaction_counts": {
+        "checkpoint_a_retrieved_chunks": 5,
+        "checkpoint_b_citation_snippets": 3,
+        "checkpoint_c_generated_output": 0
+      },
+      "total_pii_redactions": 8,
+      "zero_pii_leakage_verified": true,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "DOC-GFDRR-006::S4.0",
+          "doc_id": "DOC-GFDRR-006",
+          "grant_id": "GFDRR-ML-2026-006",
+          "country": "Mali",
+          "thematic_area": "Hydromet Services and Early Warning Systems",
+          "wb_classification": "Official Use Only",
+          "section_id": "S4.0",
+          "section_title": "FCV Field Focal Roster & Women's Relay Verification",
+          "page_ref": "p.9-10",
+          "bm25_score": 37.1646,
+          "dense_score": 0.863,
+          "rrf_score": 0.04756,
+          "rerank_score": 0.9464,
+          "redacted_text": "Women listeners' clubs constitute 52% of certified commune warning relays. Field audit log submitted by Regional Hydromet Coordinator [REDACTED_PERSON] (email: [REDACTED_EMAIL], tel [REDACTED_PHONE]) verified solar radio handset distribution to relay custodian [REDACTED_ID] at [REDACTED_ADDRESS], confirming uninterrupted river-stage broadcasts during market closures.",
+          "chunk_sha256": "cbe536f3ce3f490d429217012ffb4e3d7f4209075ff4b8eb16ab79b7cba84eb1"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-006::S2.0",
+          "doc_id": "DOC-GFDRR-006",
+          "grant_id": "GFDRR-ML-2026-006",
+          "country": "Mali",
+          "thematic_area": "Hydromet Services and Early Warning Systems",
+          "wb_classification": "Official Use Only",
+          "section_id": "S2.0",
+          "section_title": "Satellite-Blended Hydromet Modernization",
+          "page_ref": "p.3-5",
+          "bm25_score": 15.9828,
+          "dense_score": 0.4855,
+          "rrf_score": 0.04643,
+          "rerank_score": 0.6212,
+          "redacted_text": "Grant GFDRR-ML-2026-006 ($1.75M, co-financed under CREWS) integrated tamper-resistant solar telemetry gauges with satellite rainfall-runoff ensembles, informing $160.0M in World Bank Hydromet & Food System Resilience financing.",
+          "chunk_sha256": "7749b39acbea7de87c2b7fc5402046c49fe99bc3a4f796c987d9fd7d40438010"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-006::S3.0",
+          "doc_id": "DOC-GFDRR-006",
+          "grant_id": "GFDRR-ML-2026-006",
+          "country": "Mali",
+          "thematic_area": "Hydromet Services and Early Warning Systems",
+          "wb_classification": "Official Use Only",
+          "section_id": "S3.0",
+          "section_title": "M&E Early Warning Reach & Lead-Time Gains",
+          "page_ref": "p.6-8",
+          "bm25_score": 13.1229,
+          "dense_score": 0.4121,
+          "rrf_score": 0.04535,
+          "rerank_score": 0.5727,
+          "redacted_text": "Tracked under Priority 4 indicator RF-2030-IND-06 (people covered by actionable multi-hazard early warning), 3,100,000 agropastoralists receive Bambara, Fulfulde, and Songhai rural radio and interactive voice response (IVR) alerts, extending flood lead time to 96 hours and reducing millet replanting losses by 29%.",
+          "chunk_sha256": "fc7e62499bafc695888f132a39188c6b0217ed0079fd2f63134bdea75a42a200"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-006::S1.0",
+          "doc_id": "DOC-GFDRR-006",
+          "grant_id": "GFDRR-ML-2026-006",
+          "country": "Mali",
+          "thematic_area": "Hydromet Services and Early Warning Systems",
+          "wb_classification": "Official Use Only",
+          "section_id": "S1.0",
+          "section_title": "Observation Network Gaps in Fragile Basins",
+          "page_ref": "p.1-2",
+          "bm25_score": 7.6798,
+          "dense_score": 0.3817,
+          "rrf_score": 0.04432,
+          "rerank_score": 0.5137,
+          "redacted_text": "Armed insecurity across central Mali forced manual hydrological station closures along the Bani and Inner Niger Delta reaches, degrading 5-day flood lead-time skill below 48%.",
+          "chunk_sha256": "cb28760f27980f76aa6b50f7a606468f0137979293dc401bdb64c24b7cd29468"
+        }
+      ],
+      "redaction_diffs": [
+        {
+          "chunk_id": "DOC-GFDRR-006::S4.0",
+          "checkpoint_a_count": 5,
+          "checkpoint_b_count": 3,
+          "pii_types": [
+            "ADDRESS",
+            "EMAIL",
+            "ID",
+            "PERSON",
+            "PHONE"
+          ],
+          "redacted_text": "Women listeners' clubs constitute 52% of certified commune warning relays. Field audit log submitted by Regional Hydromet Coordinator [REDACTED_PERSON] (email: [REDACTED_EMAIL], tel [REDACTED_PHONE]) verified solar radio handset distribution to relay custodian [REDACTED_ID] at [REDACTED_ADDRESS], confirming uninterrupted river-stage broadcasts during market closures.",
+          "redacted_snippet": "Mali Agro-Hydromet Last-Mile Early Warning & FCV Community Dissemination Review (GFDRR-ML-2026-006, p.9-10): Women listeners' clubs constitute 52% of certified commune warning relays. Field audit log submitted by Regional Hydromet Coordinator [REDACTED_PERSON] (email: [REDACTED_EMAIL], tel [REDACTED_PHONE]) ...",
+          "synthetic_demo_before_text": "Women listeners' clubs constitute 52% of certified commune warning relays. Field audit log submitted by Regional Hydromet Coordinator Amina Oumarou Diallo (email: amina.diallo@hydromet-mali-sim.ml, tel +223-76-44-19-82) verified solar radio handset distribution to relay custodian NID-ML-99041827 at Compound 9, Avenue de l'Independance, Mopti, confirming uninterrupted river-stage broadcasts during market closures."
+        }
+      ],
+      "answer_text": "Grounded synthesis across 4 verified GFDRR M&E evidence section(s):\n- **Mali \u2014 GFDRR-ML-2026-006 (FCV Field Focal Roster & Women's Relay Verification):** Women listeners' clubs constitute 52% of certified commune warning relays. Field audit log submitted by Regional Hydromet Coordinator [REDACTED_PERSON] (email: [REDACTED_EMAIL], tel [REDACTED_PHONE]) verified solar radio handset distribution to relay custodian [REDACTED_ID] at [REDACTED_ADDRESS], confirming uninterrupted river-stage broadcasts during market closures. [DOC-GFDRR-006 \u00a7S4.0, p.9-10]\n- **Mali \u2014 GFDRR-ML-2026-006 (Satellite-Blended Hydromet Modernization):** Grant GFDRR-ML-2026-006 ($1.75M, co-financed under CREWS) integrated tamper-resistant solar telemetry gauges with satellite rainfall-runoff ensembles, informing $160.0M in World Bank Hydromet & Food System Resilience financing. [DOC-GFDRR-006 \u00a7S2.0, p.3-5]\n- **Mali \u2014 GFDRR-ML-2026-006 (M&E Early Warning Reach & Lead-Time Gains):** Tracked under Priority 4 indicator RF-2030-IND-06 (people covered by actionable multi-hazard early warning), 3,100,000 agropastoralists receive Bambara, Fulfulde, and Songhai rural radio and interactive voice response (IVR) alerts, extending flood lead time to 96 hours and reducing millet replanting losses by 29%. [DOC-GFDRR-006 \u00a7S3.0, p.6-8]\n- **Mali \u2014 GFDRR-ML-2026-006 (Observation Network Gaps in Fragile Basins):** Armed insecurity across central Mali forced manual hydrological station closures along the Bani and Inner Niger Delta reaches, degrading 5-day flood lead-time skill below 48%. [DOC-GFDRR-006 \u00a7S1.0, p.1-2]",
+      "citation_precision": 1.0,
+      "provenance": {
+        "manifest_id": "PROV-FDA3CB123B5F",
+        "utc_timestamp": "2026-11-25T18:57:41Z",
+        "model_version": "gfdrr-governed-rag-v1.2-local",
+        "clearance_role": "wbg_analyst",
+        "max_classification_used": "Official Use Only",
+        "abstained": false,
+        "query_sha256": "85871eeb37f3497a1948fcd1f54c9108925dcac5d5751f0c9edfbaa3e1dbc858",
+        "answer_sha256": "00677d722113dc199ea315415673bdc52bc52be92f19e3e059fffe1f6e20c226",
+        "total_pii_redactions": 8,
+        "redactions_by_checkpoint": {
+          "checkpoint_a_retrieved_chunks": 5,
+          "checkpoint_b_citation_snippets": 3,
+          "checkpoint_c_generated_output": 0
+        },
+        "cited_chunks": [
+          {
+            "chunk_id": "DOC-GFDRR-006::S4.0",
+            "doc_id": "DOC-GFDRR-006",
+            "grant_id": "GFDRR-ML-2026-006",
+            "section_id": "S4.0",
+            "page_ref": "p.9-10",
+            "wb_classification": "Official Use Only",
+            "doc_sha256": "fbe4f35bd6ab64cbf61395463dd68d40b975ddb2cad8cea8cd95e28907118da8",
+            "chunk_sha256": "cbe536f3ce3f490d429217012ffb4e3d7f4209075ff4b8eb16ab79b7cba84eb1"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-006::S2.0",
+            "doc_id": "DOC-GFDRR-006",
+            "grant_id": "GFDRR-ML-2026-006",
+            "section_id": "S2.0",
+            "page_ref": "p.3-5",
+            "wb_classification": "Official Use Only",
+            "doc_sha256": "fbe4f35bd6ab64cbf61395463dd68d40b975ddb2cad8cea8cd95e28907118da8",
+            "chunk_sha256": "7749b39acbea7de87c2b7fc5402046c49fe99bc3a4f796c987d9fd7d40438010"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-006::S3.0",
+            "doc_id": "DOC-GFDRR-006",
+            "grant_id": "GFDRR-ML-2026-006",
+            "section_id": "S3.0",
+            "page_ref": "p.6-8",
+            "wb_classification": "Official Use Only",
+            "doc_sha256": "fbe4f35bd6ab64cbf61395463dd68d40b975ddb2cad8cea8cd95e28907118da8",
+            "chunk_sha256": "fc7e62499bafc695888f132a39188c6b0217ed0079fd2f63134bdea75a42a200"
+          },
+          {
+            "chunk_id": "DOC-GFDRR-006::S1.0",
+            "doc_id": "DOC-GFDRR-006",
+            "grant_id": "GFDRR-ML-2026-006",
+            "section_id": "S1.0",
+            "page_ref": "p.1-2",
+            "wb_classification": "Official Use Only",
+            "doc_sha256": "fbe4f35bd6ab64cbf61395463dd68d40b975ddb2cad8cea8cd95e28907118da8",
+            "chunk_sha256": "cb28760f27980f76aa6b50f7a606468f0137979293dc401bdb64c24b7cd29468"
+          }
+        ],
+        "hmac_sha256": "fbb0f1d091547f3f7b13fce17e52dc92dbbfb9bd5140d9e8254c66b6d000dc26"
+      },
+      "verification": {
+        "verified": true,
+        "status": "VERIFIED",
+        "manifest_id": "PROV-FDA3CB123B5F",
+        "hmac_valid": true,
+        "body_hash_valid": true,
+        "watermark_valid": true,
+        "reason": "Cryptographic HMAC-SHA256 signature and answer SHA-256 digest match."
+      }
+    },
+    {
+      "trace_id": "rag-case-05-abstain",
+      "short_label": "5. Out-of-Scope Abstention Gate",
+      "badge": "ABSTAINED \u00b7 Below Confidence Gate",
+      "query": "What sovereign geothermal catastrophe bond coupon spread was priced for Iceland's Reykjanes volcanic rift in FY2028?",
+      "clearance_role": "me_specialist",
+      "classification_verdict": {
+        "decision": "ALLOWED",
+        "clearance_role": "me_specialist",
+        "max_allowed_tier": "Confidential",
+        "total_corpus_chunks": 88,
+        "authorized_chunk_count": 76,
+        "blocked_chunk_count": 12,
+        "targeted_blocked_doc_ids": [],
+        "targeted_blocked_tiers": [],
+        "audit_event_id": null,
+        "reason": "Role 'me_specialist' authorized up to 'Confidential' (76/88 corpus chunks eligible)."
+      },
+      "abstained": true,
+      "abstention_reason": "Calibrated grounding confidence (0.047) below abstention threshold (0.21). Unrecognized entity/geography outside GFDRR corpus: Iceland, Reykjanes.",
+      "max_confidence": 0.0471,
+      "latency_ms": 13.999,
+      "checkpoint_redaction_counts": {
+        "checkpoint_a_retrieved_chunks": 0,
+        "checkpoint_b_citation_snippets": 0,
+        "checkpoint_c_generated_output": 0
+      },
+      "total_pii_redactions": 0,
+      "zero_pii_leakage_verified": true,
+      "retrieved_chunks": [
+        {
+          "chunk_id": "DOC-GFDRR-005::S1.0",
+          "doc_id": "DOC-GFDRR-005",
+          "grant_id": "GFDRR-BZ-2026-005",
+          "country": "Belize",
+          "thematic_area": "Disaster Risk Finance",
+          "wb_classification": "Confidential",
+          "section_id": "S1.0",
+          "section_title": "Macro-Fiscal Shock Profile & Contingent Liability Gap",
+          "page_ref": "p.1-2",
+          "bm25_score": 4.0217,
+          "dense_score": 0.7561,
+          "rrf_score": 0.04756,
+          "rerank_score": 0.0471,
+          "redacted_text": "Actuarial catastrophe modelling indicates Belize faces average annual losses equivalent to 3.1% of GDP from tropical cyclones and coastal flooding, creating an immediate 90-day post-disaster liquidity gap of $42M during 1-in-25-year events.",
+          "chunk_sha256": "ef55f8e0a9d70f3fd9678ad33335f709321392a54f0519bb5a801a23d0566527"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-005::S3.0",
+          "doc_id": "DOC-GFDRR-005",
+          "grant_id": "GFDRR-BZ-2026-005",
+          "country": "Belize",
+          "thematic_area": "Disaster Risk Finance",
+          "wb_classification": "Confidential",
+          "section_id": "S3.0",
+          "section_title": "M&E Financial Preparedness Indicators",
+          "page_ref": "p.6-7",
+          "bm25_score": 3.3946,
+          "dense_score": 0.6403,
+          "rrf_score": 0.04643,
+          "rerank_score": 0.0424,
+          "redacted_text": "Under Priority 3 indicator RF-2030-IND-05 (rapid sovereign liquidity mobilized within 14 days of shock), simulated disbursement latency dropped from 47 days to 6 business days, covering 380,000 citizens via pre-agreed treasury budget lines.",
+          "chunk_sha256": "432ef8a5fa22eb1c7a758d35826bb938c1f204c913b9f24902b9b88492d7fb54"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-005::S2.0",
+          "doc_id": "DOC-GFDRR-005",
+          "grant_id": "GFDRR-BZ-2026-005",
+          "country": "Belize",
+          "thematic_area": "Disaster Risk Finance",
+          "wb_classification": "Confidential",
+          "section_id": "S2.0",
+          "section_title": "Layered Sovereign Risk Financing & Cat DDO Terms",
+          "page_ref": "p.3-5",
+          "bm25_score": 2.7168,
+          "dense_score": 0.447,
+          "rrf_score": 0.04485,
+          "rerank_score": 0.0359,
+          "redacted_text": "Classified Confidential under client deliberative financial exceptions: Grant GFDRR-BZ-2026-005 calibrated soft-trigger state-of-emergency rules for a $65.0M World Bank Cat DDO paired with CCRIF SPC parametric tropical cyclone coverage and a meso-level reef-restoration parametric wrapper triggered at sustained winds >= 96 knots within 35 km of Turneffe Atoll.",
+          "chunk_sha256": "72eba698eca483ebf36ad81a7bc5075d8c6e2b5f7511448d89d4fc888a12bb40"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-017::S2.0",
+          "doc_id": "DOC-GFDRR-017",
+          "grant_id": "GFDRR-GLB-2026-017",
+          "country": "Global",
+          "thematic_area": "Disaster Risk Analytics",
+          "wb_classification": "Public",
+          "section_id": "S2.0",
+          "section_title": "Standardized Outcome Indicators RF-2030-IND-01 to IND-08",
+          "page_ref": "p.4-6",
+          "bm25_score": 2.2324,
+          "dense_score": 0.3286,
+          "rrf_score": 0.04384,
+          "rerank_score": 0.0316,
+          "redacted_text": "Core corporate indicators comprise: RF-2030-IND-01 (population covered by open risk analytics and Digital Earth screening), RF-2030-IND-02 (beneficiaries protected by NbS and urban heat interventions), RF-2030-IND-03 (people in code-compliant resilient housing), RF-2030-IND-04 (users of resilient lifeline transport, schools, and health systems), RF-2030-IND-05 (population covered by sovereign/subnational DRF instruments), RF-2030-IND-06 (people receiving last-mile Hydromet/EWS alerts), RF-2030-IND-07 (EOC preparedness coverage), and RF-2030-IND-08 (share of closed grants meeting dual FCV + SADDD Gender/Inclusion benchmarks).",
+          "chunk_sha256": "7c3a531b903df247364c1189078f2b75130b9b82b4c8480dd622e6ecd523ee3e"
+        },
+        {
+          "chunk_id": "DOC-GFDRR-005::S4.0",
+          "doc_id": "DOC-GFDRR-005",
+          "grant_id": "GFDRR-BZ-2026-005",
+          "country": "Belize",
+          "thematic_area": "Disaster Risk Finance",
+          "wb_classification": "Confidential",
+          "section_id": "S4.0",
+          "section_title": "Shock-Responsive Social Registry Targeting",
+          "page_ref": "p.8-9",
+          "bm25_score": 0.0,
+          "dense_score": 0.5265,
+          "rrf_score": 0.02209,
+          "rerank_score": 0.0186,
+          "redacted_text": "Cat DDO prior actions link contingent treasury drawdowns to Belize's BOOST adaptive cash transfer registry, prioritizing female-headed coastal households within 72 hours.",
+          "chunk_sha256": "fb7ee37fb0b0eec5125bf16256bc0d47236cbc487cb2c881fbececf90c3d3322"
+        }
+      ],
+      "redaction_diffs": [],
+      "answer_text": "ABSTAINED (Insufficient Corpus Evidence): No authorized GFDRR 2026-2030 corpus records met the minimum grounding threshold. Calibrated grounding confidence (0.047) below abstention threshold (0.21). Unrecognized entity/geography outside GFDRR corpus: Iceland, Reykjanes. No speculative figures or unverified claims were generated.",
+      "citation_precision": 1.0,
+      "provenance": {
+        "manifest_id": "PROV-78FA4B3C710C",
+        "utc_timestamp": "2026-11-25T18:57:41Z",
+        "model_version": "gfdrr-governed-rag-v1.2-local",
+        "clearance_role": "me_specialist",
+        "max_classification_used": "NONE (ABSTAINED)",
+        "abstained": true,
+        "query_sha256": "2270830c0115105cc297d266eb47cf79e7d7f9cdb1afaf0a04c89197e8183b85",
+        "answer_sha256": "b6d4526b86df9d8386a65a0be0c45d2e05de27488e5d0fdcf092091714e569c8",
+        "total_pii_redactions": 0,
+        "redactions_by_checkpoint": {
+          "checkpoint_a_retrieved_chunks": 0,
+          "checkpoint_b_citation_snippets": 0,
+          "checkpoint_c_generated_output": 0
+        },
+        "cited_chunks": [],
+        "hmac_sha256": "ec2decdecf050b8b13368a39d1e497e99909f2b268c18b1d0545f53fbefd5927"
+      },
+      "verification": {
+        "verified": true,
+        "status": "VERIFIED",
+        "manifest_id": "PROV-78FA4B3C710C",
+        "hmac_valid": true,
+        "body_hash_valid": true,
+        "watermark_valid": true,
+        "reason": "Cryptographic HMAC-SHA256 signature and answer SHA-256 digest match."
+      }
+    }
+  ]
+}

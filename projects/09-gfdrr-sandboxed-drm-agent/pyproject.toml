@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gfdrr-sandboxed-drm-agent"
+version = "0.1.0"
+description = "Sandboxed Multi-Agent DRM & M&E Workflow with Least-Privilege Capabilities, SQLite Crash Recovery, and HIC Gate"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6.0",
+    "numpy>=1.26.0",
+    "pandas>=2.1.0",
+    "matplotlib>=3.8.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "../08-gfdrr-me-governed-rag/src", "../gfdrr_corpus"]

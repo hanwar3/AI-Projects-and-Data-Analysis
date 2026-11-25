@@ -1,0 +1,6 @@
+config_label,retrieval_mode,recall_at_5,mrr,ndcg_at_5,citation_precision,abstention_f1,pii_redaction_recall,classification_compliance_rate,p95_latency_ms,mean_latency_ms
+(A) Dense-only (SVD Semantic),dense_only,0.8256,0.9519,0.852,1.0,1.0,1.0,1.0,6.75,5.37
+(B) BM25-only (Lexical),bm25_only,0.7827,0.9551,0.8319,1.0,1.0,1.0,1.0,7.13,5.67
+(C) Hybrid RRF (Unweighted),hybrid_rrf,0.7808,0.9423,0.8237,1.0,1.0,1.0,1.0,7.13,5.86
+(D) Hybrid RRF + Reranker + Metadata Filter,hybrid_rrf_rerank,0.9186,0.9615,0.9065,1.0,1.0,1.0,1.0,12.22,6.43
+(E) Hybrid RRF + Reranker + Filter (HITL-Tuned),hybrid_rrf_rerank,0.9263,0.9615,0.9105,1.0,1.0,1.0,1.0,12.29,6.48
